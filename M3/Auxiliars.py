@@ -1,9 +1,22 @@
-# HACER
-def formatText(text,lenLine,split):
-    # A aquesta funció li passem un text, i ens retorna el mateix text de manera que cada línia té com a màxim lenline d'ample, entre línia i línia coŀloquem el separador "split", que normalment serà un salt de línia.
-    # No es tallen les paraules, sempre s'arrodoneix a l'últim espai abans de lenline.
-    pass
-
+# COMPLETADA
+def formatText(text, lenLine, split="\n"):
+    # A aquesta funció li passem un text, i ens retorna el mateix text de manera que cada línia té com a màxim
+    # lenline d'ample, entre línia i línia coŀloquem el separador "split", que normalment serà un salt de línia. No
+    # es tallen les paraules, sempre s'arrodoneix a l'últim espai abans de lenline.
+    word = ""
+    phrase = ""
+    count = 0
+    for a in text:
+        word += a
+        count += 1
+        if a == " ":
+            phrase += word
+            word = ""
+        if count % lenLine == 0:
+            phrase += split
+    return phrase
+teto=formatText("En un pequeño pueblo junto al mar, las mañanas comenzaban siempre con el sonido de las gaviotas y el olor a sal. Los habitantes se conocían entre sí y compartían una rutina sencilla, marcada por el ritmo de las mareas. Algunos salían a pescar al amanecer, mientras otros abrían lentamente sus tiendas, saludando a los vecinos con calma. Aunque el lugar parecía detenido en el tiempo, cada día traía pequeños cambios casi imperceptibles. Una conversación nueva, una historia recordada o una decisión inesperada podían alterar la tranquilidad habitual. Esa mezcla de constancia y sorpresa hacía que vivir allí nunca resultara aburrido, sino profundamente humano.",50,"|\n")
+print(teto) #TODO me he quedao aqui
 # COMPLETADA
 def getHeader(text):
     # Aquesta funció li passem un text i ens retorna una capçalera com la següent:
@@ -12,69 +25,75 @@ def getHeader(text):
     # *********************************************************************************************************
 
     header = (
-        ("*"*105)                 + "\n" + 
-        str(text).center(105,"=") + "\n" + 
-        ("*"*105)
+            ("*" * 105) + "\n" +
+            str(text).center(105, "=") + "\n" +
+            ("*" * 105)
     )
 
     return header
 
+
 # HACER
-def getFormatedBodyColumns(tupla_texts,tupla_sizes,margin=0):
-    # A aquesta funció li passem una tupla amb textos, l'ample de cada columna, i el marge que ha d'haver-hi entre cada columna i ens retorna els textos formatats segons l'ample i el marge que hem indicat.
+def getFormatedBodyColumns(tupla_texts, tupla_sizes, margin=0):
+    # A aquesta funció li passem una tupla amb textos, l'ample de cada columna, i el marge que ha d'haver-hi entre
+    # cada columna i ens retorna els textos formatats segons l'ample i el marge que hem indicat.
     pass
+
+
 
 # HACER
 def getFormatedAdventures(adventures):
-    # A aquesta funció li passem el diccionari adventures i retorna una cadena que una vegada impresa ens mostra:
-    # La capçalera de la selecció d'aventures i les aventures amb id, títol i descripció de les aventures formatades en columnes.
+    # A aquesta funció li passem el diccionari adventures i retorna una cadena que una vegada impresa ens mostra: La
+    # capçalera de la selecció d'aventures i les aventures amb id, títol i descripció de les aventures formatades en
+    # columnes.
     pass
 
-# HACER
-def getFormatedAnswers(idAnswer,text,lenLine,leftMargin):
-    # A aquesta funció li passem un id de resposta, el text de la resposta, longitud de la línia i marge a la dreta, i ens retorna la resposta amb els paràmetres passats.
-    # Aquesta funció ens serà útil per a presentar les respostes possibles en cadascun dels passos.
-    # Observem que en formatar les línies, no tallem cap paraula per la meitat
-    pass
 
 # HACER
-def getHeadeForTableFromTuples(t_name_columns,t_size_columns,title=""):
-    # Aquesta funció, rep una tupla amb els noms de les capçaleres de les columnes (t_name_columns) i una tupla amb les seves grandàries t_size_columns i ens retorna una capçalera formatada segons els paràmetres passats.
+def getFormatedAnswers(idAnswer, text, lenLine, leftMargin):
+    # A aquesta funció li passem un id de resposta, el text de la resposta, longitud de la línia i marge a la dreta,
+    # i ens retorna la resposta amb els paràmetres passats. Aquesta funció ens serà útil per a presentar les
+    # respostes possibles en cadascun dels passos. Observem que en formatar les línies, no tallem cap paraula per la
+    # meitat
     pass
 
-# HACER
-def getTableFromDict(tuple_of_keys,weigth_of_columns,dict_of_data):
+
+# HACER duda: el title para qué sirve
+def getHeadeForTableFromTuples(t_name_columns, t_size_columns, title=""):
+    # Aquesta funció, rep una tupla amb els noms de les capçaleres de les columnes (t_name_columns) i una tupla amb
+    # les seves grandàries t_size_columns i ens retorna una capçalera formatada segons els paràmetres passats.
+    pass
+
+
+# SEMIHECHO duda: el datetime qué es? no se formata y si se pasa como una lista jode los tamaños
+def getTableFromDict(tuple_of_keys, weigth_of_columns, dict_of_data):
     # A aquesta funció li passem com a paràmetres, un diccionari del tipus {id: {diccionari amb dades}}
     # Una tupla amb les keys que ens interessa.
     # Una tupla amb les grandàries de cada columna.
     # Per exemple:
-    # tuple_of_keys = (“Username”,”Name”,”CharacterName”,”date”)
+    # tuple_of_keys = ("Username", "Name", "CharacterName", "date")
     # weigth_of_columns = (20, 30, 20, 20)
-    # dict_of_data = {
-    #     4: {
-    #         'idUser': 2, 
-    #         'Username': 'Jordi', 
-    #         'idAdventure': 1, 
-    #         'Name': 'Este muerto esta muy vivo',
-    #         'date': datetime.datetime(2021, 11, 28, 18, 17, 20),
-    #         'idCharacter': 1, 
-    #         'CharacterName': 'Beowulf'
-    #     }, 
-    #     5: {
-    #         'idUser': 2, 
-    #         'Username': 'Jordi',
-    #         'idAdventure': 1,
-    #         'Name': 'Este muerto esta muy vivo', 
-    #         'date': datetime.datetime(2021, 11, 26, 13, 28, 36), 
-    #         'idCharacter': 1,
-    #         'CharacterName': 'Beowulf'
-    #     }
-    # }
+    # dict_of_data = {4: {'idUser': 2, 'Username': 'Jordi', 'idAdventure': 1, 'Name': 'Este muerto esta muy vivo',
+    #                     'date': datetime.datetime(2021, 11, 28, 18, 17, 20), 'idCharacter': 1, 'CharacterName': 'Beowulf'},
+    #                 5: {'idUser': 2, 'Username': 'Jordi', 'idAdventure': 1, 'Name': 'Este muerto esta muy vivo',
+    #                     'date': datetime.datetime(2021, 11, 26, 13, 28, 36), 'idCharacter': 1, 'CharacterName': 'Beowulf'}}
     # I ens retorna un string que imprès té forma de taula, amb les dades corresponents a les keys que passem i formatades amb les grandàries donades
-    pass
+    cabecera = "|" + "id".center(6) + "|"
+    datos = ""
+    for key in range(0, len(tuple_of_keys)):
+        cabecera += tuple_of_keys[key].center(weigth_of_columns[key]) + "|"
+
+    for dicto in dict_of_data:
+        datos += "\n" + "|" + str(dicto).center(6) + "|"
+        for key in range(0, len(tuple_of_keys)):
+            if tuple_of_keys[key] in dict_of_data[dicto]:
+                datos += str(dict_of_data[dicto][tuple_of_keys[key]]).center(weigth_of_columns[key]) + "|"
+    tabla = cabecera + datos
+    return tabla
+
 
 # HACER
-def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[]):
+def getOpt(textOpts="", inputOptText="", rangeList=[], dictionary={}, exceptions=[]):
     # Aquesta funció ens prepara un menú en mode text.
     # El text ens indica les opcions que podem triar després d'indicar-nos què estem escollint una llista o diccionari
     # Aquest és el text TextOpts que passem.
@@ -101,38 +120,90 @@ def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[])
     # les indicades en excepcions).
     # Si passem la variable diccionari, les seves claus seran opcions vàlides també.
 
-
     pass
 
-# HACER
-def getFormatedTable(queryTable,title=""):
-    pass
 
 # HACER
+def getFormatedTable(queryTable, title=""):
+    pass
+
+
+# COMPLETADA
 def checkPassword(password):
     # Funció que chequea si el format del password és correcte.
     # Un password correcte tindrà una longitud entre 8 i 12 caràcters.
     # Alguna lletra majúscula, alguna lletra minúscula, algun número, algun caràcter especial, sense espais.
     # Si alguna de les condicions no es compleix, la mateixa funció ens mostrarà un missatge informatiu i retornarà False.
     # En cas que el password compleixi tots els requeriments, ens retornarà True
-    pass
+    error_msg = ""
+    upper_bool = False
+    lower_bool = False
+    number_bool = False
+    specialchar_bool = False
+    if len(password) < 8:
+        error_msg = "El password té menys de 8 caràcters. "
+    elif len(password) > 12:
+        error_msg = "El password té més de 12 caràcters. "
+    else:
+        for a in password:
+            if a == " ":
+                error_msg = "El password no pot contenir espais. "
+            if a.isupper():
+                upper_bool = True
+            if a.islower():
+                lower_bool = True
+            if a.isnumeric():
+                number_bool = True
+            if not a.isalnum():
+                if a.isascii():
+                    specialchar_bool = True
+        if upper_bool == False:
+            error_msg = "El password no conté almenys una majúscula. "
+        elif lower_bool == False:
+            error_msg = "El password no conté almenys una minúscula. "
+        elif number_bool == False:
+            error_msg = "El password no conté almenys un número. "
+        elif specialchar_bool == False:
+            error_msg = "El password no conté almenys un caràcter especial. "
+    if error_msg != "":
+        print(error_msg)
+        return False
+    else:
+        return True
 
-# HACER
+
+# COMPLETADA
 def checkUser(user):
     # Funció que chequea que un usuari tingui el format correcte. longitud entre 6 i 10 i alfanumèric.
     # Si alguna de les condicions no es compleix, la mateixa funció ens mostrarà un missatge informatiu i retornarà False.
     # En cas que el password compleixi tots els requeriments, ens retornarà True
-    pass
+    error_msg = ""
+    alnum_bool = True
+    if len(user) < 6:
+        error_msg = "El password té menys de 6 caràcters. "
+    elif len(user) > 10:
+        error_msg = "El password té més de 10 caràcters. "
+    else:
+        for a in user:
+            if not a.isalnum():
+                error_msg = "El nom d'usuari només pot contenir caràcters alfanumérics. "
+    if error_msg != "":
+        print(error_msg)
+        return False
+    else:
+        return True
+
 
 # HACER
 def userExists(user):
     # Funció que ens retorna True si l’usuari existeix, o False si no existeix.
     pass
 
+
 # HACER
 def replay(choices):
     # Aquesta funció serà l'encarregada de fer-nos el replay d'una aventura ja jugada, una vegada hàgim triat el idGame que volem reviure.
-    # Li passarem una tupla de tuples del tipus:
-    # ((pas, selecció), (pas, selecció),(pas, selecció)... )
-    # Amb tots els passos i seleccions que es van fer en aquesta aventura i ens mostrarà l'aventura pas a pas com si l'estiguéssim jugant de nou, però en comptes de demanar-nos triar un pas, ens demanarà que cliquem "Enter" per a continuar.
+    # Li passarem una tupla de tuples del tipus: ((pas, selecció), (pas, selecció),(pas, selecció)... )
+    # Amb tots els passos i seleccions que es van fer en aquesta aventura i ens mostrarà l'aventura pas a pas
+    # com si l'estiguéssim jugant de nou, però en comptes de demanar-nos triar un pas, ens demanarà que cliquem "Enter" per a continuar.
     pass
