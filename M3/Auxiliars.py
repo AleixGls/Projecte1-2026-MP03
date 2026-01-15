@@ -22,7 +22,11 @@ def getHeader(text):
 # HACER
 def getFormatedBodyColumns(tupla_texts,tupla_sizes,margin=0):
     # A aquesta funció li passem una tupla amb textos, l'ample de cada columna, i el marge que ha d'haver-hi entre cada columna i ens retorna els textos formatats segons l'ample i el marge que hem indicat.
-    pass
+    for i in range(len(tupla_texts)):
+        print(tupla_texts[i])
+
+text1 = "Seguro que más de uno recuerda aquellos libros en los que podías elegir cómo seguir con la aventura que estabas viviendo simplemente"
+getFormatedBodyColumns((text1,text1,text1),(20,30,50),margin=2)
 
 # HACER
 def getFormatedAdventures(adventures):
@@ -104,6 +108,7 @@ def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[])
     #Bucle
     flagMenu = True
     while flagMenu == True:
+
         #Menu
         print(textOpts)
         opt_str = input(inputOptText)
@@ -128,33 +133,18 @@ def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[])
             else:
                 print("\nOpcio no valida.")
 
-
-
-    
-
-textOpts = "\n1)Login\n2)Create user\n3)Show Adventures\n4)Exit"
-inputOptText="\nElige tu opción: "
-lista = [1,2,3,4]
-diccionario={"a":"patata",54:66}
-exceptions = ["w","e",-1]
-
-opc = getOpt(textOpts,inputOptText,lista,diccionario,exceptions)
-
-print(opc)
-
-
-
-
-
-
-
-
-
-
-
-
 # HACER
 def getFormatedTable(queryTable,title=""):
+    # Aquesta funció rep una taula del tipus que retorna la funció "getTable" i ens formata el contingut de la taula per a presentar-lo per pantalla.
+    # Aquesta funció ens servirà per mostrar els informes.
+    # S’ha de tenir en compte que l’amplada màxima que es pot fer servir a la consola en el cas dels reports és de 120, per tant, haurem de dividir aquests 120 entre les columnes que tingui la taula que hem de mostrar.
+    # Per exemple, si la funció getTable ens ha retornat:
+    # (
+    #   ('ID AVENTURA - NOMBRE', 'ID PASO - DESCRIPCION', 'ID RESPUESTA - DESCRIPCION', 'NUMERO VECES SELECCIONADA'), 
+    #   ('10 - Todos los h├®roes necesitan su princesa', '101 - Son las 6 de la ma├▒ana, %personaje% est├í profundamente dormido. Le suena la alarma!', '101 - Apaga la alarma porque quiere dormir, han sido d├¡as muy duros y %personaje% necesita un descanso.', 7),
+    #   ('10 - Todos los h├®roes necesitan su princesa', '103 - Nuestro h├®roe %personaje% se viste r├ípidamente y va an direcci├│n al ciber, hay mucho jaleo en la calle, tambi├®n mucha polic├¡a.', '108 - Entra en el ciber a revisar si la princesa Wyoming sigue dentro.', 5)
+    # )
+    # Aquesta funció ens retornarà un string que es pot imprimir.
     pass
 
 # HACER
