@@ -73,7 +73,7 @@ def getTableFromDict(tuple_of_keys,weigth_of_columns,dict_of_data):
     # I ens retorna un string que imprès té forma de taula, amb les dades corresponents a les keys que passem i formatades amb les grandàries donades
     pass
 
-# HACER
+# COMPLETADA
 def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[]):
     # Aquesta funció ens prepara un menú en mode text.
     # El text ens indica les opcions que podem triar després d'indicar-nos què estem escollint una llista o diccionari
@@ -101,8 +101,57 @@ def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[])
     # les indicades en excepcions).
     # Si passem la variable diccionari, les seves claus seran opcions vàlides també.
 
+    #Bucle
+    flagMenu = True
+    while flagMenu == True:
+        #Menu
+        print(textOpts)
+        opt_str = input(inputOptText)
 
-    pass
+        # Comprobante int
+        try:
+            opt_int = int(opt_str)
+            if opt_int in rangeList or opt_int in dictionary or opt_int in exceptions:
+                return opt_int
+
+        # Comprobante string
+        except:
+            if opt_str in rangeList or opt_str in dictionary or opt_str in exceptions:
+                return opt_str
+            else:
+                print("\nOpcio no valida.")
+
+        # Comprobante string del int
+        else:
+            if opt_str in rangeList or opt_str in dictionary or opt_str in exceptions:
+                return opt_str
+            else:
+                print("\nOpcio no valida.")
+
+
+
+    
+
+textOpts = "\n1)Login\n2)Create user\n3)Show Adventures\n4)Exit"
+inputOptText="\nElige tu opción: "
+lista = [1,2,3,4]
+diccionario={"a":"patata",54:66}
+exceptions = ["w","e",-1]
+
+opc = getOpt(textOpts,inputOptText,lista,diccionario,exceptions)
+
+print(opc)
+
+
+
+
+
+
+
+
+
+
+
 
 # HACER
 def getFormatedTable(queryTable,title=""):
