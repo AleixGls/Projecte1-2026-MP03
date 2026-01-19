@@ -10,13 +10,13 @@ USE mydb;
   ALTER TABLE Characters
 	ADD PRIMARY KEY (Id_character),
     MODIFY COLUMN Id_character int NOT NULL,
-    MODIFY COLUMN name int NOT NULL;
+    MODIFY COLUMN name VARCHAR(45) NOT NULL;
   
   -- Tabla Adventures
   ALTER TABLE Adventures 
 	ADD PRIMARY KEY (Id_adventure),
     MODIFY COLUMN Id_adventure int NOT NULL,
-    MODIFY COLUMN name int NOT NULL;
+    MODIFY COLUMN name VARCHAR(45) NOT NULL;
   
   -- Tabla Step adventures
   ALTER TABLE Step_adventures 

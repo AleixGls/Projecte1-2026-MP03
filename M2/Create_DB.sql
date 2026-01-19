@@ -12,19 +12,19 @@ CREATE TABLE IF NOT EXISTS Users (
 CREATE TABLE IF NOT EXISTS Characters (
   Id_character INT,
   Name VARCHAR(45),
-  Description VARCHAR(200));
+  Description VARCHAR(2000));
   
   -- Tabla Adventures
   CREATE TABLE IF NOT EXISTS Adventures (
   Id_adventure INT,
   Name VARCHAR(45),
-  Description VARCHAR(200));
+  Description VARCHAR(2000));
   
   -- Tabla Step adventures
   CREATE TABLE IF NOT EXISTS Step_adventures (
   Id_step_adventure INT,
   Id_adventure INT,
-  Description VARCHAR(45),
+  Description VARCHAR(2000),
   Is_final_step TINYINT);
   
   -- Tabla Step options
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Characters (
   Id_step_option INT,
   Id_step_adventure INT,
   Leads_to INT,
-  Description VARCHAR(200));
+  Description VARCHAR(2000));
   
   -- Tabla Adventure protagonists
   CREATE TABLE IF NOT EXISTS Adventure_protagonists (
