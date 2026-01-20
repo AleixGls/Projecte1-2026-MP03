@@ -78,3 +78,47 @@ h6 {
 p {
   overflow-wrap: break-word;
 }
+
+/* =====================
+   RESPONSIVE MEDIA QUERIES
+===================== */
+
+/* Tablets: 768px a 1024px */
+@media (max-width: 1024px) {
+  body {
+    font-size: 15px;
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Móviles: hasta 767px */
+@media (max-width: 767px) {
+  body {
+    font-size: 14px;
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+}

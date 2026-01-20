@@ -73,3 +73,63 @@
   border-radius: 12px;               /* Bordes del iframe */
 }
 
+/* ===================== MEDIA QUERIES ===================== */
+
+/* Tablets: 768px a 1024px */
+@media (max-width: 1024px) {
+
+  /* Cards */
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card {
+    padding: 1.8rem 1.2rem;
+  }
+
+  /* Video */
+  .video-container {
+    padding: 0.8rem;
+  }
+
+  .video-container iframe {
+    height: 350px; /* reduce altura para tablet */
+  }
+}
+
+/* Móviles: hasta 767px */
+@media (max-width: 767px) {
+
+  /* Cards */
+  .cards-grid {
+    grid-template-columns: 1fr; /* una tarjeta por fila */
+    gap: 1rem;
+  }
+
+  .card {
+    padding: 1.2rem 1rem;
+  }
+
+  .card h4 {
+    font-size: 1rem;
+  }
+
+  .card p {
+    font-size: 0.85rem;
+  }
+
+  /* Video */
+  .video-container {
+    padding: 0.5rem;
+  }
+
+  .video-container iframe {
+    height: 220px; /* altura compacta en móvil */
+  }
+
+  .video h3,
+  .cards h3 {
+    font-size: 1.5rem;
+  }
+}

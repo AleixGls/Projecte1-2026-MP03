@@ -184,3 +184,121 @@ input[name="character-slide"] {
   padding: 1rem 2rem;
   font-size: 2rem;
 }
+
+/* =====================
+   RESPONSIVE MEDIA QUERIES
+===================== */
+
+/* Tablets: 768px a 1024px */
+@media (max-width: 1024px) {
+
+  /* STORY CARDS */
+  .story-cards {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .story-card {
+    padding: 1.2rem;
+  }
+
+  .story-card img {
+    height: 150px;
+  }
+
+  .story-cards-title {
+    font-size: 1.8rem;
+  }
+
+  /* CHARACTER CAROUSEL */
+  .character-carousel-section {
+    max-width: 700px;
+  }
+
+  .carousel {
+    max-width: 100%;
+    padding-bottom: 3rem;
+  }
+
+  .slide img {
+    max-width: 250px;
+  }
+
+  .slide-name {
+    font-size: 1.1rem;
+  }
+}
+
+/* Móviles: hasta 767px */
+@media (max-width: 767px) {
+
+  /* STORY CARDS */
+  .story-cards {
+    grid-template-columns: 1fr; /* Una sola columna */
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .story-cards-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .story-card {
+    padding: 1rem;
+  }
+
+  .story-card img {
+    height: 120px;
+  }
+
+  .story-card h3 {
+    font-size: 1rem;
+  }
+
+  .story-card p {
+    font-size: 0.9rem;
+  }
+
+  /* CHARACTER CAROUSEL */
+  .character-carousel-section {
+    max-width: 95%;
+    margin: 3rem auto;
+    padding: 0 1rem;
+  }
+
+  .carousel {
+    padding-bottom: 2.5rem;
+  }
+
+  /* Cada slide sigue ocupando un tercio del contenedor, como desktop */
+  /* Cada slide ocupa todo el ancho del contenedor visible */
+  .slide {
+    width: 33.3333%;       /* igual que desktop */
+    padding: 0.5rem;       /* reduce padding para móvil */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Imagen adaptada para móvil */
+  .slide img {
+    width: 90%;            /* ocupa la mayor parte de la slide */
+    max-width: 180px;      /* límite máximo */
+    height: auto;          /* mantiene proporción */
+    object-fit: contain;   /* no se corta ni deforma */
+    border-radius: 16px;
+  }
+
+  .slide-name {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  /* Nav dots */
+  .nav label {
+    width: 10px;
+    height: 10px;
+  }
+}
