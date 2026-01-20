@@ -15,8 +15,7 @@ def formatText(text, lenLine, split="\n"):
         if count % lenLine == 0:
             phrase += split
     return phrase
-teto=formatText("En un pequeño pueblo junto al mar, las mañanas comenzaban siempre con el sonido de las gaviotas y el olor a sal. Los habitantes se conocían entre sí y compartían una rutina sencilla, marcada por el ritmo de las mareas. Algunos salían a pescar al amanecer, mientras otros abrían lentamente sus tiendas, saludando a los vecinos con calma. Aunque el lugar parecía detenido en el tiempo, cada día traía pequeños cambios casi imperceptibles. Una conversación nueva, una historia recordada o una decisión inesperada podían alterar la tranquilidad habitual. Esa mezcla de constancia y sorpresa hacía que vivir allí nunca resultara aburrido, sino profundamente humano.",50,"|\n")
-print(teto) #TODO me he quedao aqui
+
 # COMPLETADA
 def getHeader(text):
     # Aquesta funció li passem un text i ens retorna una capçalera com la següent:
