@@ -17,7 +17,7 @@
   <!-- CSS -->
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/carrusel.css">
+  <link rel="stylesheet" href="css/history.css">
 </head>
 
 <body>
@@ -48,67 +48,88 @@
     <section>
       <h2>La història del joc</h2>
       <p>
-        En un món ple de misteris, cada decisió pot canviar el curs del destí.
-        Choose your Story et permet viure aventures úniques i irrepetibles.
+        En un món ple de misteris, perills ocults i camins incerts, cada decisió que prens pot canviar el curs del destí. Les teves eleccions no només defineixen el teu camí, sinó també el futur dels personatges i dels regnes que descobriràs.
+      </p>
+      <p>
+        Choose your Story et permet viure aventures úniques i irrepetibles, on cap història és igual a una altra. Explora mons desconeguts, afronta dilemes difícils i assumeix les conseqüències de cada elecció. 
+      </p>
+      <p>
+        El teu viatge, la teva història, el teu destí.
       </p>
     </section>
-
-    <!-- CAROUSEL -->
-    <section class="carousel">
-      <input type="radio" name="slides" id="slide1" checked>
-      <input type="radio" name="slides" id="slide2">
-      <input type="radio" name="slides" id="slide3">
     
-      <div class="carousel-track">
-        <img src="assets/img/story1.jpg" alt="Personatge 1">
-        <img src="assets/img/story2.jpg" alt="Escena del joc">
-        <img src="assets/img/story3.jpg" alt="Moment clau de la història">
-      </div>
-    
-      <div class="carousel-controls">
-        <label for="slide1"></label>
-        <label for="slide2"></label>
-        <label for="slide3"></label>
+    <!-- HISTORIAS -->
+    <section class="story-cards-section">
+      <h2 class="story-cards-title">Histories</h2>
+
+      <div class="story-cards">
+        <div class="story-card reveal">
+          <img src="assets/img/bosqueMaldito.png" alt="El bosc maleït">
+          <h3>El Bosc Maleït</h3>
+          <p>
+            Un bosc antic on la llum a penes aconsegueix travessar l'espès dosser d'arbres retorçats. 
+          </p>
+          <p>
+            Ruïnes cobertes de molsa, senderes enganyoses i criatures ocultes converteixen cada pas en una prova.
+          </p>
+        </div>
+      
+        <div class="story-card reveal">
+          <img src="assets/img/torreOscura.png" alt="Conflicte">
+          <h3>La Torre Fosca</h3>
+          <p>
+            Una colossal torre de pedra negra s'alça cap al cel tempestuós, desafiant a tot aquell que intenti conquistar-la. 
+          </p>
+          <p>
+            En el seu interior, passadissos estrets, escales interminables i paranys mortals posen a prova l'habilitat i la valentia de l'aventurer.
+            Només els més audaços arribaran al cim.
+          </p>
+        </div>
+      
+        <div class="story-card reveal">
+          <img src="assets/img/ciudadPerdida.png" alt="Finals del joc">
+          <h3>La Ciutat Perduda</h3>
+          <p>
+            Oculta entre la selva i el pas del temps, aquesta ciutat ancestral guarda els vestigis d'una civilització desapareguda. 
+          </p>
+          <p>
+            La naturalesa ha reclamat el seu territori, però antics mecanismes, secrets i tresors encara romanen intactes. 
+          </p>
+        </div>
       </div>
     </section>
 
-
-    <!-- STORY SECTION 1 -->
-    <section class="story-section">
-      <div class="reveal">
-        <h3>L’inici de l’aventura</h3>
-        <p>
-          Tot comença amb un despertar inesperat. El teu personatge es troba en una
-          situació desconeguda i haurà de prendre la seva primera decisió.
-        </p>
-      </div>
-      <img src="assets/img/history-start.jpg" alt="Inici de l'aventura" class="reveal">
+    <!-- CARRUSEL DE PERSONAJES -->
+    <section class="character-carousel-section">
+      <h2 class="carousel-title">Personatges</h2>
+      <section class="carousel">
+        <!-- Radios -->
+        <input type="radio" name="character-slide" id="char1" checked>
+        <input type="radio" name="character-slide" id="char2">
+        <input type="radio" name="character-slide" id="char3">
+        <!-- Slides -->
+        <section class="slides">
+          <section class="slide">
+            <img src="assets/img/arinElGuerrero.png" alt="Arin">
+            <p class="slide-name">Arin, El Guerrer</p>
+          </section>
+          <section class="slide">
+            <img src="assets/img/lyraLaMaga.png" alt="Lyra">
+            <p class="slide-name">Lyra, La Maga</p>
+          </section>
+          <section class="slide">
+            <img src="assets/img/korinElExplorador.png" alt="Korin">
+            <p class="slide-name">Korin, L'Explorador</p>
+          </section>
+        </section>
+        <!-- Indicadores -->
+        <section class="nav">
+          <label for="char1" aria-label="Personatge 1"></label>
+          <label for="char2" aria-label="Personatge 2"></label>
+          <label for="char3" aria-label="Personatge 3"></label>
+        </section>
+      </section>
     </section>
-
-    <!-- STORY SECTION 2 -->
-    <section class="story-section">
-      <img src="assets/img/history-conflict.jpg" alt="Conflicte" class="reveal">
-      <div class="reveal">
-        <h3>Conflictes i eleccions</h3>
-        <p>
-          Al llarg del camí apareixeran enemics, aliats i situacions morals complexes
-          que posaran a prova la teva manera de pensar.
-        </p>
-      </div>
-    </section>
-
-    <!-- STORY SECTION 3 -->
-    <section class="story-section">
-      <div class="reveal">
-        <h3>Diferents finals</h3>
-        <p>
-          No hi ha un únic final. Les teves decisions definiran com acaba la història
-          i quin llegat deixarà el teu personatge.
-        </p>
-      </div>
-      <img src="assets/img/history-ending.jpg" alt="Finals del joc" class="reveal">
-    </section>
-
   </main>
 
   <!-- ================= FOOTER ================= -->
@@ -122,9 +143,5 @@
       <a href="#"><i class="fa-brands fa-tiktok"></i></a>
     </div>
   </footer>
-
-  <!-- JS -->
-  <script src="js/scroll-animations.js"></script>
-
 </body>
 </html>

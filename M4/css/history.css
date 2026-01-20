@@ -1,0 +1,176 @@
+
+.story-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+.story-cards-section {
+  margin: 3rem 0;
+}
+
+.story-cards-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+.story-card {
+  background: rgba(255, 255, 255, 0.03);  /* Fondo semitransparente */
+  padding: 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.story-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.story-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.story-card p {
+  color: var(--muted-text);
+  line-height: 1.5;
+}
+
+/* ================= VARIABLES ================= */
+:root {
+  --primary-color: #8ab4f8;
+  --bg-color: #0f0f17;
+  --text-color: #eaeaea;
+}
+
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ================= SECTION ================= */
+.character-carousel-section {
+  max-width: 900px;
+  margin: 4rem auto;
+  padding: 0 1rem;
+}
+
+.carousel-title {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+/* ================= CAROUSEL ================= */
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+  padding-bottom: 3.5rem;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+
+/* ================= SLIDES ================= */
+.slides {
+  display: flex;
+  width: 300%;
+  transition: transform 0.6s ease;
+}
+
+.slide {
+  width: 33.3333%;
+  padding: 2rem;
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.slide img {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.slide-name {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+
+
+/* ================= RADIOS ================= */
+input[name="character-slide"] {
+  display: none;
+}
+
+/* ================= MOVEMENT ================= */
+#char1:checked ~ .slides { transform: translateX(0); }
+#char2:checked ~ .slides { transform: translateX(-33.3333%); }
+#char3:checked ~ .slides { transform: translateX(-66.6666%); }
+
+/* ================= NAV DOTS ================= */
+.nav {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+}
+
+
+.nav label {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav label:hover {
+  background: rgba(255,255,255,0.9);
+  transform: scale(1.2);
+}
+
+/* ACTIVE DOT */
+#char1:checked ~ .slides ~ .nav label[for="char1"],
+#char2:checked ~ .slides ~ .nav label[for="char2"],
+#char3:checked ~ .slides ~ .nav label[for="char3"] {
+  background: var(--primary-color);
+  transform: scale(1.3);
+}
