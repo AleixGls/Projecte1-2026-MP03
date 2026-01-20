@@ -1,0 +1,99 @@
+/* =====================
+   SECCIÓ INSTRUCCIONS
+===================== */
+.instructions-section {
+  margin-bottom: 4rem;
+}
+
+.instruction-item {
+  background-color: #1a1a2e;
+  padding: 1.8rem;
+  border-radius: 16px;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.instruction-item img {
+  display: block;
+  margin: 0 auto 1.5rem auto;
+  width: 600px;
+  max-width: 100%;
+  border-radius: 18px;
+}
+
+.instruction-item h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+/* =====================
+   MECÀNIQUES
+===================== */
+.mechanics-section {
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.mechanics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.mechanic-card {
+  background-color: #1a1a2e;
+  padding: 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.mechanic-card:hover {
+  transform: translateY(-6px);
+}
+
+.mechanic-card img {
+  display: block;
+  margin: 0 auto 1rem auto;
+  width: 200px;
+  max-width: 100%;
+}
+
+.mechanic-card h3 {
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+
+/* =====================
+   TARJETA INTERACTIVA
+===================== */
+.interactive-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.interactive-card {
+  max-width: 520px;
+  margin: auto;
+  padding: 2.2rem;
+  border-radius: 22px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--accent-color)
+  );
+  color: white;
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.interactive-card p {
+  color: white;
+}
+
+.interactive-card:hover {
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
+}

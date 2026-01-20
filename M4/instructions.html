@@ -17,6 +17,7 @@
   <!-- CSS -->
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/instructions.css">
 </head>
 
 <body>
@@ -43,74 +44,81 @@
   <!-- ================= MAIN ================= -->
   <main>
 
-    <!-- TITLE -->
-    <section>
-      <h2>Com jugar a Choose your Story</h2>
-      <p>
-        Segueix aquestes instruccions per començar la teva aventura i viure una
-        experiència única basada en les teves decisions.
-      </p>
+    <!-- ================= INSTRUCCIONS DEL JOC ================= -->
+    <section class="instructions-section">
+      <h2>Instruccions del joc</h2>
+
+      <article class="instruction-item">
+        <img src="assets/img/placeholder.png" alt="Pantalla de login">
+        <h3>Pas 1 · Inicia sessió</h3>
+        <p>
+          Accedeix al joc amb el teu usuari i contrasenya per començar
+          la teva aventura personalitzada.
+        </p>
+      </article>
+
+      <article class="instruction-item">
+        <img src="assets/img/placeholder.png" alt="Selecció de personatge">
+        <h3>Pas 2 · Tria personatge i aventura</h3>
+        <p>
+          Selecciona el personatge i l’aventura que vols jugar.
+          Cada combinació ofereix una experiència diferent.
+        </p>
+      </article>
+
+      <article class="instruction-item">
+        <img src="assets/img/placeholder.png" alt="Preses de decisions">
+        <h3>Pas 3 · Pren decisions</h3>
+        <p>
+          Llegeix atentament cada situació i escull una opció.
+          Les teves decisions determinaran el desenvolupament de la història.
+        </p>
+      </article>
     </section>
 
-    <!-- INSTRUCTIONS WITH SCREENSHOTS -->
-    <section class="scroll-section">
-      <h3>Passos principals</h3>
-
-      <div class="scroll-steps">
-        <article class="step reveal">
-          <img src="assets/img/instruction-login.png" alt="Login screenshot">
-          <h4>1. Inicia sessió</h4>
-          <p>
-            Accedeix amb el teu usuari o crea’n un de nou per començar a jugar.
-          </p>
-        </article>
-
-        <article class="step reveal">
-          <img src="assets/img/instruction-character.png" alt="Character selection">
-          <h4>2. Escull el personatge</h4>
-          <p>
-            Cada personatge té habilitats i històries diferents.
-          </p>
-        </article>
-
-        <article class="step reveal">
-          <img src="assets/img/instruction-decision.png" alt="Decision making">
-          <h4>3. Pren decisions</h4>
-          <p>
-            Llegeix atentament i tria el camí que marcarà el teu destí.
-          </p>
-        </article>
+    <!-- ================= MECÀNIQUES ================= -->
+    <section class="mechanics-section">
+      <h2>Mecàniques del joc</h2>
+    
+      <div class="mechanics-grid">
+      
+        <div class="mechanic-card">
+          <img src="assets/img/placeholder.png" alt="Selecció de personatges">
+          <h3>Selecció de personatges</h3>
+        </div>
+      
+        <div class="mechanic-card">
+          <img src="assets/img/placeholder.png" alt="Història interactiva">
+          <h3>Història interactiva</h3>
+        </div>
+      
+        <div class="mechanic-card">
+          <img src="assets/img/placeholder.png" alt="Rejugar aventures">
+          <h3>Rejugar aventures</h3>
+        </div>
+      
+        <div class="mechanic-card">
+          <img src="assets/img/placeholder.png" alt="Estadístiques finals">
+          <h3>Estadístiques finals</h3>
+        </div>
+      
       </div>
     </section>
 
-    <!-- GAME MECHANICS -->
-    <section class="how-to-play">
-      <h3>Mecàniques del joc</h3>
-
-      <div class="scroll-steps">
-        <div class="card hover-scale">
-          <h4>Decisions ramificades</h4>
+    <!-- ================= TARJETA INTERACTIVA ================= -->
+    <section class="interactive-section">
+      <a href="history.html" class="interactive-card-link">
+        <h2>Explora tots els camins</h2>
+        
+        <div class="interactive-card">
+          <h3>Una història diferent cada vegada</h3>
           <p>
-            Cada elecció desbloqueja nous camins i finals diferents.
+            Canvia les teves decisions i descobreix nous finals.
+            Cap partida és igual a l’anterior.
           </p>
         </div>
-
-        <div class="card hover-scale">
-          <h4>Història dinàmica</h4>
-          <p>
-            El relat s’adapta segons les teves accions durant la partida.
-          </p>
-        </div>
-
-        <div class="card hover-scale">
-          <h4>Rejugabilitat</h4>
-          <p>
-            Pots repetir l’aventura i descobrir opcions que abans no vas triar.
-          </p>
-        </div>
-      </div>
+      </a>
     </section>
-
   </main>
 
   <!-- ================= FOOTER ================= -->
