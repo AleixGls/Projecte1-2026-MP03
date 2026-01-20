@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Story | Història</title>
+  <link rel="icon" href="assets/img/logo.png"> 
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <!-- Social Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/history.css">
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="main-header">
+    <div class="logo">
+      <img src="assets/img/logo.png" alt="logo">
+      <h1>CHOOSE YOUR STORY</h1>
+    </div>
+
+    <!-- Checkbox para controlar menú -->
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="instructions.html">Instruccions</a></li>
+        <li><a href="history.html" class="active">Història</a></li>
+        <li><a href="users.html">Usuaris</a></li>
+        <li><a href="contact.html">Contacte</a></li>
+        <li><a href="about.html">About us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main>
+
+    <!-- TITLE -->
+    <section>
+      <h2>La història del joc</h2>
+      <p>
+        En un món ple de misteris, perills ocults i camins incerts, cada decisió que prens pot canviar el curs del destí. Les teves eleccions no només defineixen el teu camí, sinó també el futur dels personatges i dels regnes que descobriràs.
+      </p>
+      <p>
+        Choose your Story et permet viure aventures úniques i irrepetibles, on cap història és igual a una altra. Explora mons desconeguts, afronta dilemes difícils i assumeix les conseqüències de cada elecció. 
+      </p>
+      <p>
+        El teu viatge, la teva història, el teu destí.
+      </p>
+    </section>
+    
+    <!-- HISTORIAS -->
+    <section class="story-cards-section">
+      <h2 class="story-cards-title">Histories</h2>
+
+      <div class="story-cards">
+        <div class="story-card reveal">
+          <img src="assets/img/bosqueMaldito.png" alt="El bosc maleït">
+          <h3>El Bosc Maleït</h3>
+          <p>
+            Un bosc antic on la llum a penes aconsegueix travessar l'espès dosser d'arbres retorçats. 
+          </p>
+          <p>
+            Ruïnes cobertes de molsa, senderes enganyoses i criatures ocultes converteixen cada pas en una prova.
+          </p>
+        </div>
+      
+        <div class="story-card reveal">
+          <img src="assets/img/torreOscura.png" alt="Conflicte">
+          <h3>La Torre Fosca</h3>
+          <p>
+            Una colossal torre de pedra negra s'alça cap al cel tempestuós, desafiant a tot aquell que intenti conquistar-la. 
+          </p>
+          <p>
+            En el seu interior, passadissos estrets, escales interminables i paranys mortals posen a prova l'habilitat i la valentia de l'aventurer.
+            Només els més audaços arribaran al cim.
+          </p>
+        </div>
+      
+        <div class="story-card reveal">
+          <img src="assets/img/ciudadPerdida.png" alt="Finals del joc">
+          <h3>La Ciutat Perduda</h3>
+          <p>
+            Oculta entre la selva i el pas del temps, aquesta ciutat ancestral guarda els vestigis d'una civilització desapareguda. 
+          </p>
+          <p>
+            La naturalesa ha reclamat el seu territori, però antics mecanismes, secrets i tresors encara romanen intactes. 
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARRUSEL DE PERSONAJES -->
+    <section class="character-carousel-section">
+      <h2 class="carousel-title">Personatges</h2>
+      <section class="carousel">
+        <!-- Radios -->
+        <input type="radio" name="character-slide" id="char1" checked>
+        <input type="radio" name="character-slide" id="char2">
+        <input type="radio" name="character-slide" id="char3">
+        <!-- Slides -->
+        <section class="slides">
+          <section class="slide">
+            <img src="assets/img/arinElGuerrero.png" alt="Arin">
+            <p class="slide-name">Arin, El Guerrer</p>
+          </section>
+          <section class="slide">
+            <img src="assets/img/lyraLaMaga.png" alt="Lyra">
+            <p class="slide-name">Lyra, La Maga</p>
+          </section>
+          <section class="slide">
+            <img src="assets/img/korinElExplorador.png" alt="Korin">
+            <p class="slide-name">Korin, L'Explorador</p>
+          </section>
+        </section>
+        <!-- Indicadores -->
+        <section class="nav">
+          <label for="char1" aria-label="Personatge 1"></label>
+          <label for="char2" aria-label="Personatge 2"></label>
+          <label for="char3" aria-label="Personatge 3"></label>
+        </section>
+      </section>
+    </section>
+
+    <!-- ================= BOTÓ GITHUB ================= -->
+    <section class="github-section">
+      <a href="https://github.com/AleixGls/Projecte1-2026-MP03" target="_blank" class="btn-primary">Accedir al repositori de GitHub</a>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="main-footer">
+    <p>© 2026 Choose your Story</p>
+
+    <div class="social-icons">
+      <a href="#"><i class="fa-brands fa-twitter"></i></a>
+      <a href="#"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#"><i class="fa-brands fa-facebook"></i></a>
+      <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+    </div>
+  </footer>
+</body>
+</html>

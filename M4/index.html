@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Story | Home</title>
+  <link rel="icon" href="assets/img/logo.png"> 
+
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <!-- Social Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+  <!-- ================= HEADER ================= -->
+  <header class="main-header">
+    <div class="logo">
+      <img src="assets/img/logo.png" alt="logo">
+      <h1>CHOOSE YOUR STORY</h1>
+    </div>
+
+    <!-- Checkbox para controlar menú -->
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    <label for="menu-toggle" class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="instructions.html">Instruccions</a></li>
+        <li><a href="history.html">Història</a></li>
+        <li><a href="users.html">Usuaris</a></li>
+        <li><a href="contact.html">Contacte</a></li>
+        <li><a href="about.html">About us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <h2>La teva història comença aquí</h2>
+        <p>
+          Un joc narratiu on cada decisió importa. Explora, decideix i crea el teu propi destí.
+        </p>
+        <a href="history.html" class="btn-primary">Comença l’aventura</a>
+      </div>
+      <div class="hero-image">
+        <img src="assets/img/arinElGuerrero.png" alt="heroImage">
+      </div>
+    </section>
+
+    <!-- MAPA DEL TESORO -->
+    <section class="treasure-map">
+      <svg viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg">
+        <!-- Fondo del mapa -->
+        <rect class="map-bg" x="0" y="0" width="800" height="180" rx="15" ry="15"/>
+      
+        <!-- Camino del tesoro -->
+        <path id="path" d="M60 150 C160 120, 240 160, 320 130 S480 100, 560 150 S720 130, 740 110"/>
+      
+        <!-- X marca el tesoro -->
+        <circle class="treasure" cx="740" cy="110" r="10"/>
+      
+        <!-- Barco que sigue el camino -->
+        <circle class="ship" r="8"/>
+      </svg>
+    </section>
+
+    <!-- AVENTURA (SCROLL ANIMATION) -->
+    <section class="adventure-section">
+      <h3>L’aventura del joc</h3>
+    
+      <div class="adventure-cards">
+        <article class="adventure-card reveal">
+          <h4>Explora</h4>
+          <p>
+            Descobreix mons plens de misteris, camins ocults i secrets ancestrals.
+          </p>
+        </article>
+      
+        <article class="adventure-card reveal">
+          <h4>Decideix</h4>
+          <p>
+            Cada elecció influeix en la història i pot canviar completament el teu destí.
+          </p>
+        </article>
+      
+        <article class="adventure-card reveal">
+          <h4>Conseqüències</h4>
+          <p>
+            Les teves accions tenen impacte real en el món i en els personatges.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- COM ES JUGA -->
+    <section class="how-to-play">
+      <h3>Com es juga?</h3>
+    
+      <ul class="mechanics-list">
+        <li>
+          <i class="fa-solid fa-book-open"></i>
+          Història narrativa interactiva basada en text
+        </li>
+        <li>
+          <i class="fa-solid fa-code-branch"></i>
+          Decisions que ramifiquen la història
+        </li>
+        <li>
+          <i class="fa-solid fa-dice"></i>
+          Situacions aleatòries que afecten el desenllaç
+        </li>
+        <li>
+          <i class="fa-solid fa-user"></i>
+          Elecció de personatge i aventures diferents
+        </li>
+        <li>
+          <i class="fa-solid fa-chart-simple"></i>
+          Estadístiques finals segons les teves decisions
+        </li>
+      </ul>
+    
+      <a href="instructions.html" class="btn-secondary">
+        Veure instruccions completes
+      </a>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="main-footer">
+    <p>© 2026 Choose your Story</p>
+
+    <div class="social-icons">
+      <a href="#"><i class="fa-brands fa-twitter"></i></a>
+      <a href="#"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#"><i class="fa-brands fa-facebook"></i></a>
+      <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+    </div>
+  </footer>
+</body>
+</html>

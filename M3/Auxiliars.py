@@ -33,10 +33,135 @@ def getHeader(text):
 
 
 # HACER
-def getFormatedBodyColumns(tupla_texts, tupla_sizes, margin=0):
-    # A aquesta funció li passem una tupla amb textos, l'ample de cada columna, i el marge que ha d'haver-hi entre
-    # cada columna i ens retorna els textos formatats segons l'ample i el marge que hem indicat.
-    pass
+def getFormatedBodyColumns(tupla_texts,tupla_sizes,margin=0):
+    # A aquesta funció li passem una tupla amb textos, l'ample de cada columna, i el marge que ha d'haver-hi entre cada columna i ens retorna els textos formatats segons l'ample i el marge que hem indicat.
+    
+    # Extraer la longitud de la tupla de frases
+    len_texts = len(tupla_texts)
+
+    # Crear la lista columnas en base a las frases que tenemos que formatear
+    columnas = [None] * len_texts
+    
+    # Inicializar variables
+    palabra = ""
+    fila = ""
+    
+    # For para extraer las frases de las tuplas y 
+    # crear las filas que tendran que tener las columnas
+    for i1 in range(len_texts):
+
+        # Obtener la frase que vamos a seccionar de la tupla_texts
+        frase = tupla_texts[i1]
+        
+        #Inizializar la lista columnas, y en la siguiente pasada reiniciarla
+        columna = []
+        palabras = []
+                 
+        # For para extraer las palabras de la frase y añadirlas a la lista palabras
+        for i2 in range(len(frase)):
+        
+            # Detectar la letra de la iteracion actual
+            letra = frase[i2]
+
+            # Condicionales para crear la lista de palabras de la frase
+            # Si la letra no es un espacio, añadirla a la palabra
+            if letra != " ":
+                palabra += letra
+
+            # Si lo es, hay 2 opciones
+            else:
+                #Si la palabra no esta vacia, añadirla a la lista de palabras
+                if palabra != "":
+                    palabras.append(palabra)
+                    palabra=""
+
+                # Si esta vacia, no hacer nada y continuar el bucle
+                else:
+                    pass
+        
+        # Al acabar el bucle, añadir la ultima palabra a la lista y reiniciar la variable 
+        palabras.append(palabra)
+        palabra=""
+
+        # For para pasar las palabras extraidas anteriormente y 
+        # formatearlas en lineas del ancho de la columna, para poder 
+        # crear las columnas para el string que devolvera la funcion
+        for i2 in range(len(palabras)):
+
+            #Condicionales para añadir palabra a la fila
+            #Si en la fila no hay palabras se añade
+            if fila == "":
+                fila+=palabras[i2]
+
+            #Si hay pueden pasar 2 cosas
+            else:
+                # Si la fila puede soportar un espacio y la palabra, esta se añade
+                if (len(palabras[i2]) + 1) + len(fila) <= tupla_sizes[i1]:
+                    fila+=(" "+palabras[i2])
+
+                # Si no, la fila se añade a la columna, se reinicia y se añade la palabra a la nueva fila
+                else:
+                    columna.append(fila)
+                    fila=""
+                    fila+=palabras[i2]
+            
+            # En la iteracion final, se comprueba si la fila no estaba vacia,
+            # se añade a la columna y se reinicia la variable
+            if i2 == len(palabras)-1 and fila !="":
+                columna.append(fila)
+                fila=""
+
+        # Introudcir la columna creada en la lista de columnas
+        columnas[i1] = columna
+
+    # Inicializar variables
+    filas_max = 0
+
+    # For para averiguar cuantas longitud de lineas hay
+    for i1 in range(len(columnas)):
+        
+        # Condicional para actualizar la longitud maxima
+        if len(columnas[i1]) > filas_max:
+            filas_max = len(columnas[i1])
+    
+    # Inicializar variables
+    fila_actual = ""
+    linea = ""
+    frase_formateada = ""
+
+    #For para recorrer el maximo numero de filas que hemos sacado antes
+    for i1 in range(filas_max):
+
+        #For para recorrer el numero de columnas
+        for i2 in range(len(columnas)):
+
+            # Condicional comprobante de que existe esa fila en la columna que estamos y 
+            # formatear la linea al tamaño de la tupla_sizes que le corresponde a esa columna
+            if i1 < len(columnas[i2]):
+                fila_actual = str(columnas[i2][i1]).ljust(tupla_sizes[i2])
+
+            # Si no lo existe, rellenar el hueco con espacios
+            else:
+                fila_actual = " " * tupla_sizes[i2]
+
+            # Sumar la fila actual a la linea que devolvera la funcion
+            linea += fila_actual
+
+            # Condicional para sumar los margenes a la linea si estan entre las columnas
+            if i2 != len(columnas) - 1:
+                linea += (" "*margin)
+            
+            # Si es el final, sumarle un salto de linea
+            else:
+                linea += "\n"
+
+        # Sumar la linea formateada al string que devolver 
+        # la funcion y resetear la linea para la siguiente
+        frase_formateada += linea
+        linea = ""
+
+    # Devolver el sring completamente formateado
+    return frase_formateada
 
 
 
@@ -91,8 +216,8 @@ def getTableFromDict(tuple_of_keys, weigth_of_columns, dict_of_data):
     return tabla
 
 
-# HACER
-def getOpt(textOpts="", inputOptText="", rangeList=[], dictionary={}, exceptions=[]):
+# COMPLETADA
+def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[]):
     # Aquesta funció ens prepara un menú en mode text.
     # El text ens indica les opcions que podem triar després d'indicar-nos què estem escollint una llista o diccionari
     # Aquest és el text TextOpts que passem.
@@ -119,8 +244,47 @@ def getOpt(textOpts="", inputOptText="", rangeList=[], dictionary={}, exceptions
     # les indicades en excepcions).
     # Si passem la variable diccionari, les seves claus seran opcions vàlides també.
 
-    pass
+    #Bucle
+    flagMenu = True
+    while flagMenu == True:
 
+        #Menu
+        print(textOpts)
+        opt_str = input(inputOptText)
+
+        # Comprobante int
+        try:
+            opt_int = int(opt_str)
+            if opt_int in rangeList or opt_int in dictionary or opt_int in exceptions:
+                return opt_int
+
+        # Comprobante string
+        except:
+            if opt_str in rangeList or opt_str in dictionary or opt_str in exceptions:
+                return opt_str
+            else:
+                print("\nOpcio no valida.")
+
+        # Comprobante string del int
+        else:
+            if opt_str in rangeList or opt_str in dictionary or opt_str in exceptions:
+                return opt_str
+            else:
+                print("\nOpcio no valida.")
+
+# HACER
+def getFormatedTable(queryTable,title=""):
+    # Aquesta funció rep una taula del tipus que retorna la funció "getTable" i ens formata el contingut de la taula per a presentar-lo per pantalla.
+    # Aquesta funció ens servirà per mostrar els informes.
+    # S’ha de tenir en compte que l’amplada màxima que es pot fer servir a la consola en el cas dels reports és de 120, per tant, haurem de dividir aquests 120 entre les columnes que tingui la taula que hem de mostrar.
+    # Per exemple, si la funció getTable ens ha retornat:
+    # (
+    #   ('ID AVENTURA - NOMBRE', 'ID PASO - DESCRIPCION', 'ID RESPUESTA - DESCRIPCION', 'NUMERO VECES SELECCIONADA'), 
+    #   ('10 - Todos los h├®roes necesitan su princesa', '101 - Son las 6 de la ma├▒ana, %personaje% est├í profundamente dormido. Le suena la alarma!', '101 - Apaga la alarma porque quiere dormir, han sido d├¡as muy duros y %personaje% necesita un descanso.', 7),
+    #   ('10 - Todos los h├®roes necesitan su princesa', '103 - Nuestro h├®roe %personaje% se viste r├ípidamente y va an direcci├│n al ciber, hay mucho jaleo en la calle, tambi├®n mucha polic├¡a.', '108 - Entra en el ciber a revisar si la princesa Wyoming sigue dentro.', 5)
+    # )
+    # Aquesta funció ens retornarà un string que es pot imprimir.
+    pass
 
 # HACER
 def getFormatedTable(queryTable, title=""):

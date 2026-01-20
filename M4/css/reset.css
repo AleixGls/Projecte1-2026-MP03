@@ -1,0 +1,124 @@
+/* =====================
+   CSS RESET
+===================== */
+
+/* Box sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* HTML & BODY */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+}
+
+/* Lists */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Images */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Forms */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  border: none;
+  background: none;
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: inherit;
+}
+
+/* Paragraphs */
+p {
+  overflow-wrap: break-word;
+}
+
+/* =====================
+   RESPONSIVE MEDIA QUERIES
+===================== */
+
+/* Tablets: 768px a 1024px */
+@media (max-width: 1024px) {
+  body {
+    font-size: 15px;
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Móviles: hasta 767px */
+@media (max-width: 767px) {
+  body {
+    font-size: 14px;
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+}

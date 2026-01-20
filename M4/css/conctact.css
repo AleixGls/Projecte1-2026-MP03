@@ -1,0 +1,163 @@
+/* =====================
+   CONTACT INFO
+===================== */
+.contact-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.contact-info a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.contact-info iframe {
+  width: 100%;
+  height: 300px;
+  border: none;
+  border-radius: 16px;
+}
+
+/* =====================
+   FORM CONTAINER
+===================== */
+.contact-form {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  max-width: 600px;
+  margin: 0 auto 4rem auto;
+}
+
+.contact-form h3 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* =====================
+   FORM ELEMENTS
+===================== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.form-group label {
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease, background 0.3s ease;
+  background: #1a1a24;
+  resize: vertical;
+  color: var(--text-color);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #777;
+}
+
+/* =====================
+   VALID / INVALID STATES
+===================== */
+.form-group.valid input,
+.form-group.valid textarea {
+  border-color: #2ecc71;
+  background: rgba(46, 204, 113, 0.1);
+}
+
+.form-group.invalid input,
+.form-group.invalid textarea {
+  border-color: #e74c3c;
+  background: rgba(231, 76, 60, 0.1);
+}
+
+/* =====================
+   ERROR MESSAGE
+===================== */
+.error-message {
+  font-size: 0.8rem;
+  color: #e74c3c;
+  margin-top: 0.3rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.form-group.invalid .error-message {
+  opacity: 1;
+}
+
+/* =====================
+   SUBMIT BUTTON
+===================== */
+.contact-form button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* ===================== MEDIA QUERIES ===================== */
+
+/* Tablets: 768px a 1024px */
+@media (max-width: 1024px) {
+
+  .contact-info {
+    grid-template-columns: 1fr; /* una columna en tablet */
+    gap: 1.5rem;
+  }
+
+  .contact-info iframe {
+    height: 250px;
+  }
+
+  .contact-form {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+/* Móviles: hasta 767px */
+@media (max-width: 767px) {
+
+  .contact-info {
+    grid-template-columns: 1fr; /* una columna */
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .contact-info iframe {
+    height: 200px;
+  }
+
+  .contact-form {
+    padding: 2rem 1rem;
+    margin: 0 1rem 3rem 1rem;
+  }
+
+  .contact-form h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 0.9rem;
+    padding: 0.7rem 0.8rem;
+  }
+
+  .contact-form button {
+    font-size: 0.95rem;
+    padding: 0.7rem 0;
+  }
+}
