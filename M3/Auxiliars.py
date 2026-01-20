@@ -22,10 +22,91 @@ def getHeader(text):
 # HACER
 def getFormatedBodyColumns(tupla_texts,tupla_sizes,margin=0):
     # A aquesta funció li passem una tupla amb textos, l'ample de cada columna, i el marge que ha d'haver-hi entre cada columna i ens retorna els textos formatats segons l'ample i el marge que hem indicat.
-    for i in range(len(tupla_texts)):
-        print(tupla_texts[i])
+    
+    # Extraer la longitud de la tupla de frases
+    len_texts = len(tupla_texts)
+
+    # Crear la lista columnas en base a las frases que tenemos que formatear
+    columnas = [None] * len_texts
+    
+    # Inicializar los contadores y la fila para que no de error luego
+    contador_letras = 0
+    contador_pasadas = 0
+    palabras=[]
+    palabra = ""
+    fila = ""
+    
+    # For para extraer las frases de las tuplas y 
+    # crear las filas que tendran que tener las columnas
+    for i1 in range(len_texts):
+
+        # Obtener la frase de la columna y su logitud
+        frase = tupla_texts[i1]
+        len_frase = len(frase)
+        
+
+        # Dividir la longitud de la frase entre la longitud de la columna
+        # para obtener el numero de pasadas que tendra que hacer el bucle 
+        # ademas de la longitud de filas que tendra que tener la columna
+        #TODO pasadas = len_frase / tupla_sizes[i1]
+        #TODO if pasadas > int(pasadas):
+        #TODO     pasadas = int(pasadas+1)
+        #TODO columna = [None] * pasadas
+        columna = []
+                 
+        # For para extraer las palabras de la frase y añadirlas a la lista palabras
+        for i2 in range(len_frase):
+        
+            # Detectar la letra de la iteracion actual
+            letra = frase[i2]
+
+            # Condicionales para añadir la palabra a la lista palabras o seguir creando la palabra
+            # Añadir la ultima palabra a la lisa 
+            # y no cortar la ultima letra de la palabra
+            if i2 == len_frase-1:
+                palabra += letra
+                palabras.append(palabra)
+                palabra=""
+
+            # Si se encuentra un espacio en la frase 
+            # se añade la palabra a la lisa
+            elif letra == " ":
+                palabras.append(palabra)
+                palabra=""
+            
+            # Si no se encuentra un espacio y no es la ultima letra, 
+            # seguir añadiendo letras a la palabra
+            else:
+                palabra += letra
+
+        print(palabras)
+        # For para pasar las palabras extraidas anteriormente y 
+        # formatearlas en lineas del ancho de la columna, para poder 
+        # crear las columnas para el string que devolvera la funcion
+        for i2 in range(len(palabras)):
+            if i2 == len(palabras)-1:
+                fila+=(palabras[i2]+" ")
+
+            if len(palabras[i2]) + len(fila) <= tupla_sizes[i1]-1:
+                fila+=(palabras[i2]+" ")
+            else:
+                columna.append(fila)
+                fila=""
+                fila+=(palabras[i2]+" ")
+
+            print(fila)
+
+        palabras = []
+        # Introudcir la columna creada en la lista de columnas
+        columnas[i1] = columna
+
+    print(columnas)
+    
+
+
 
 text1 = "Seguro que más de uno recuerda aquellos libros en los que podías elegir cómo seguir con la aventura que estabas viviendo simplemente"
+#text1= "prueba19___________ prueba20____________ prueba21_____________"
 getFormatedBodyColumns((text1,text1,text1),(20,30,50),margin=2)
 
 # HACER
