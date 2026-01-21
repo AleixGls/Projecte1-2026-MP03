@@ -396,6 +396,10 @@ def main_menu():
             # Login en usuario
             if choice == 1:
                 login_user()
+                user_logged_in = game_context["idUser"] and game_context['username']
+                if user_logged_in:
+                    select_adventure()
+                    select_character()
 
             # Crear usuario
             elif choice == 2:
