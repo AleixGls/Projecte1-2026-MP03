@@ -502,9 +502,9 @@ def main_menu():
         # Menu no logeado
         if not user_logged_in:
             choice = Auxiliars.getOpt(
-                textOpts="1) Login\n2) Crear nuevo usuario\n3) Rejugar aventura\n4) Ver informes\n5) Salir\n6) Seleccionar aventura\n7) Seleccionar personaje\n8) Jugar aventura",
+                textOpts="1) Login\n2) Crear nuevo usuario\n3) Rejugar aventura\n4) Ver informes\n5) Salir\n",
                 inputOptText="\nElige una opción: ",
-                rangeList=[1, 2, 3, 4, 5, 6, 7, 8]
+                rangeList=[1, 2, 3, 4, 5]
             )
 
             # Login en usuario
@@ -534,33 +534,13 @@ def main_menu():
             elif choice == 5:
                 print("\n¡Gracias por jugar a Choose your Story!")
                 flag_menu = False
-            
-            #DEBUG
-            #ADVENTURE
-            elif choice == 6:
-                select_adventure()
-
-            #CHARACTER
-            elif choice == 7:
-                select_character()
-
-            #PLAY
-            elif choice == 8:
-                if not game_context['idUser']:
-                    print("Primero debes hacer login.")
-                elif not game_context['idAdventure']:
-                    print("Primero selecciona una aventura.")
-                elif not game_context['idChar']:
-                    print("Primero selecciona un personaje.")
-                else:
-                    play_adventure()
 
         # Menu logged
         else:
             choice = Auxiliars.getOpt(
-                textOpts="1) Logout\n2) Jugar\n3) Rejugar aventura\n4) Ver informes\n5) Salir\n6) Seleccionar aventura\n7) Seleccionar personaje",
+                textOpts="1) Logout\n2) Jugar\n3) Rejugar aventura\n4) Ver informes\n5) Salir\n",
                 inputOptText="\nElige una opción: ",
-                rangeList=[1, 2, 3, 4, 5, 6, 7, 8]
+                rangeList=[1, 2, 3, 4, 5]
             )
 
             # Logout del usuario
@@ -569,14 +549,7 @@ def main_menu():
 
             # Jugar
             elif choice == 2:
-                if not game_context['idUser']:
-                    print("Primero debes hacer login.")
-                elif not game_context['idAdventure']:
-                    print("Primero selecciona una aventura.")
-                elif not game_context['idChar']:
-                    print("Primero selecciona un personaje.")
-                else:
-                    play_adventure()
+                play_adventure()
             
             # Replay
             elif choice == 3:
@@ -590,16 +563,7 @@ def main_menu():
             elif choice == 5:
                 print("\n¡Gracias por jugar a Choose your Story!")
                 flag_menu = False
-
-            #DEBUG
-            #ADVENTURE
-            elif choice == 6:
-                select_adventure()
-
-            #CHARACTER
-            elif choice == 7:
-                select_character()
-
+        
 # ============================================
 # 4. INICIO DEL PROGRAMA
 # ============================================
