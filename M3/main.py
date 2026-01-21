@@ -47,7 +47,7 @@ def login_user():
             if user in users:
                 game_context['idUser'] = users[user]['idUser']
                 game_context['username'] = user
-                print(f"¡Bienvenido, {user}!")
+                print("¡Bienvenido, {}!".format(user))
                 return True
         return False
 
@@ -83,8 +83,9 @@ def create_user():
         else:
             new_id = 1
             
-        # Insertar en BD (necesitarías implementar BBDD.insertUser)
+        BBDD.insertUser(new_id,user,password)
         print("Usuario creado correctamente. Ahora puedes hacer login.")
+        print("Enter to continue: ")
         return True
 
 
@@ -96,6 +97,7 @@ def select_adventure():
         print("No hay aventuras disponibles.")
         return None
     
+
     print(Auxiliars.getHeadeForTableFromTuples(("Id Aventura","Aventura","Descripcion"), (25,40,40),"Aventuras"))
     for i in adventures:
         print(Auxiliars.getFormatedBodyColumns((str(i)+")",adventures[i]["name"],adventures[i]["description"]),(25,40,40),0))
@@ -121,7 +123,7 @@ def select_character():
     print(Auxiliars.getHeadeForTableFromTuples(("Id Personaje","Personaje","Descripcion"), (25,40,40),"Personajes"))
     for i in characters:
         print(Auxiliars.getFormatedBodyColumns((str(i)+")",characters[i]["name"],characters[i]["description"]),(25,40,40),0))
-  
+
     personaje = Auxiliars.getOpt("0) Para salir","Elige un personaje: ",[],characters,[0])
     
     if personaje != 0:
@@ -130,8 +132,6 @@ def select_character():
     else:
         game_context["idChar"] = None
         game_context["characterName"] = None
-        
-    
 
 #TODO
 def play_adventure():
@@ -161,13 +161,14 @@ def play_adventure():
     first_step = BBDD.get_first_step_adventure(game_context['idAdventure'])
     current_step = first_step
     
-    print(Auxiliars.getHeader(f"COMIENZA LA AVENTURA: {game_context['adventureName']}"))
-    print(f"Personaje: {game_context['characterName']}")
+    print(Auxiliars.getHeader("COMIENZA LA AVENTURA: {}".format(game_context['adventureName'])))
+    print("Personaje: {}".format(game_context['characterName']))
     print("-" * 105)
     
     # Bucle principal del juego
-    while current_step and current_step in steps:
-        step_data = steps[current_step]
+    flag_exit=False
+    while not flag_exit:
+        step_data = current_step
         
         # Mostrar descripción del paso
         print("\n" + "=" * 105)
@@ -179,7 +180,7 @@ def play_adventure():
             print("\n" + "*" * 105)
             print("FIN DE LA AVENTURA".center(105))
             print("*" * 105)
-            break
+            flag_exit
         
         # Obtener opciones para este paso
         available_options = {}
@@ -266,8 +267,8 @@ def replay_adventure():
                     
                     for step_id, choice_id in choices:
                         # Aquí mostrarías cada paso y elección
-                        print(f"\nPaso: {step_id}")
-                        print(f"Elección: {choice_id}")
+                        print("\nPaso: {}".format(step_id))
+                        print("Elección: {}".format(choice_id))
                         input("Presiona Enter para continuar...")
                     
                     print("\nReplay completado.")
@@ -334,23 +335,14 @@ def show_reports():
     print("\n3. AVENTURAS JUGADAS POR USUARIO:")
     user_to_check = input("Introduce el nombre de usuario a consultar: ").strip()
     
-    query3 = f"""
-    SELECT 
-        g.id_adventure,
-        a.name as nombre_aventura,
-        g.date as fecha_partida
-    FROM Games g
-    JOIN Adventures a ON g.id_adventure = a.id_adventure
-    JOIN Users u ON g.id_user = u.id_user
-    WHERE u.username = '{user_to_check}'
-    ORDER BY g.date DESC
-    """
+
+    query3 = ("SELECT g.id_adventure, a.name as nombre_aventura, g.date as fecha_partida FROM Games g JOIN Adventures a ON g.id_adventure = a.id_adventure JOIN Users u ON g.id_user = u.id_user) WHERE u.username = '{}' ORDER BY g.date DESC".format(user_to_check))
     
     try:
         report3 = BBDD.get_table(query3)
-        print(Auxiliars.getFormatedTable(report3, f"Aventuras jugadas por {user_to_check}"))
+        print(Auxiliars.getFormatedTable(report3, "Aventuras jugadas por {}".format(user_to_check)))
     except:
-        print(f"Error al generar el informe para {user_to_check}")
+        print("Error al generar el informe para {}".format(user_to_check))
 
 # ============================================
 # 3. MENÚ PRINCIPAL
@@ -363,25 +355,22 @@ def main_menu():
     while flag_menu:
         print(Auxiliars.getHeader("CHOOSE YOUR STORY"))
 
-        # DEBUG
-        # USER
-        if game_context["idUser"]:
-            print(f"Usuario: {game_context['idUser']}")
+        
         if game_context['username']:
-            print(f"Nombre usuario: {game_context['username']}")
+            print("Usuario: {}".format(game_context['idUser']))
+            print("Nombre usuario: {}".format(game_context['username']))
 
         # ADVENTURE
         if game_context["idAdventure"]:
-            print(f"Aventura: {game_context['idAdventure']}")
+            print("Aventura: {}".format(game_context['idAdventure']))
         if game_context["adventureName"]:
-            print(f"Nombre Aventura: {game_context['adventureName']}")
+            print("Nombre Aventura: {}".format(game_context['adventureName']))
 
         # CHARACTER
         if game_context["idChar"]:
-            print(f"Personaje: {game_context['idChar']}")
+            print("Personaje: {}".format(game_context['idChar']))
         if game_context["characterName"]:
-            print(f"Nombre personaje: {game_context['characterName']}")
-        
+            print("Nombre personaje: {}".format(game_context['characterName']))
         # User loggeado
         user_logged_in = game_context["idUser"] and game_context['username']
         
@@ -396,7 +385,9 @@ def main_menu():
             # Login en usuario
             if choice == 1:
                 login_user()
+
                 user_logged_in = game_context["idUser"] and game_context['username']
+
                 if user_logged_in:
                     select_adventure()
                     select_character()
@@ -426,7 +417,7 @@ def main_menu():
             #CHARACTER
             elif choice == 7:
                 select_character()
-          
+
             #PLAY
             elif choice == 8:
                 if not game_context['idUser']:
@@ -498,7 +489,7 @@ if __name__ == "__main__":
             print("Error: No se pudo conectar a la base de datos.")
             exit()
     except Exception as e:
-        print(f"Error de conexión: {e}")
+        print("Error de conexión: {}".format(e))
         exit()
     
     # Iniciar menú principal

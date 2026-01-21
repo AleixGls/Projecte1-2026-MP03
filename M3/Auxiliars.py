@@ -180,10 +180,10 @@ def getFormatedAdventures(adventures):
     datos=""
     for adventureId in adventures:
         cont=0
-        datos+=(f"{adventureId}".ljust(t_size_columns[cont]))
+        datos+=(str(adventureId).ljust(t_size_columns[cont]))
         for item in (adventures[adventureId]):
             cont+=1
-            datos += (f"{adventures[adventureId][item]}".ljust(t_size_columns[cont]))
+            datos += (str(adventures[adventureId][item]).ljust(t_size_columns[cont]))
         datos+="\n"
     return cabecera+"\n"+datos
 
@@ -193,7 +193,7 @@ def getFormatedAnswers(idAnswer, text, lenLine, leftMargin):
     # i ens retorna la resposta amb els paràmetres passats. Aquesta funció ens serà útil per a presentar les
     # respostes possibles en cadascun dels passos. Observem que en formatar les línies, no tallem cap paraula per la
     # meitat
-    answer=(f"{idAnswer}) {text}")
+    answer=("{}) {}".format(idAnswer,text))
     formatedAnswer=formatText(answer,lenLine)
     return formatedAnswer.ljust(leftMargin)
 
@@ -208,7 +208,7 @@ def getHeadeForTableFromTuples(t_name_columns, t_size_columns, title=""):
         t_name=t_name_columns[i]
         t_size=t_size_columns[i]
         cabecera_ancho+=t_size
-        cabecera+=(f"{t_name}".ljust(t_size))
+        cabecera+=(str(t_name).ljust(t_size))
     return(title.center(cabecera_ancho,"=")+"\n"+cabecera+"\n"+"".center(cabecera_ancho,"*"))
 # COMPLETADA
 def getTableFromDict(tuple_of_keys, weigth_of_columns, dict_of_data):
@@ -326,15 +326,19 @@ def checkPassword(password):
         for a in password:
             if a == " ":
                 error_msg = "El password no pot contenir espais. "
-            if a.isupper():
-                upper_bool = True
-            if a.islower():
-                lower_bool = True
-            if a.isnumeric():
-                number_bool = True
-            if not a.isalnum():
-                if a.isascii():
-                    specialchar_bool = True
+            if not upper_bool:
+                if a.isupper():
+                    upper_bool = True
+            if not lower_bool:
+                if a.islower():
+                    lower_bool = True
+            if not number_bool:
+                if a.isnumeric():
+                    number_bool = True
+            if not specialchar_bool:
+                if not a.isalnum():
+                    if a.isascii():
+                        specialchar_bool = True
         if upper_bool == False:
             error_msg = "El password no conté almenys una majúscula. "
         elif lower_bool == False:
@@ -358,13 +362,11 @@ def checkUser(user):
     error_msg = ""
     alnum_bool = True
     if len(user) < 6:
-        error_msg = "El password té menys de 6 caràcters. "
+        error_msg = "El nombre de usuario tiene menos de 6 carácteres. "
     elif len(user) > 10:
-        error_msg = "El password té més de 10 caràcters. "
-    else:
-        for a in user:
-            if not a.isalnum():
-                error_msg = "El nom d'usuari només pot contenir caràcters alfanumérics. "
+        error_msg = "El nombre de usuario tiene más de 10 carácteres. "
+    elif not user.isalnum():
+        error_msg = "El nom d'usuari només pot contenir caràcters alfanumérics. "
     if error_msg != "":
         print(error_msg)
         return False

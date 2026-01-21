@@ -26,7 +26,7 @@ def get_answers_bystep_adventure(idAdventure):
     conn = connectToDB()  # Conexión a la base de datos
     cursor = conn.cursor()  # Abrimos el cursor
     cursor.execute(
-        f"SELECT Id_step_option, leads_to, description FROM Step_options WHERE id_step_adventure in (SELECT id_step_adventure from Step_adventures where id_adventure = {idAdventure});")
+        "SELECT Id_step_option, leads_to, description FROM Step_options WHERE id_step_adventure in (SELECT id_step_adventure from Step_adventures where id_adventure = {});".format(idAdventure))
     step_option_query = cursor.fetchall()
 
     options_dict = {}
@@ -70,7 +70,7 @@ def get_id_bystep_adventure(idAdventure):
 
     cursor = conn.cursor()  # Abrimos el cursor
     cursor.execute(
-        f"SELECT Id_step_adventure, Description, Is_final_step FROM Step_adventures WHERE Id_adventure = {idAdventure};")
+        "SELECT Id_step_adventure, Description, Is_final_step FROM Step_adventures WHERE Id_adventure = {};".format(idAdventure))
 
     step_adventure_query = cursor.fetchall()
 
@@ -90,7 +90,7 @@ def get_first_step_adventure(idAdventure):
     conn = connectToDB()
     cursor = conn.cursor()
 
-    init_step_adventure=cursor.execute(f"SELECT * FROM Step_adventures WHERE id_adventure = {idAdventure} AND id_step_adventure NOT IN (SELECT Leads_to from Step_options);")
+    init_step_adventure=cursor.execute("SELECT * FROM Step_adventures WHERE id_adventure = {} AND id_step_adventure NOT IN (SELECT Leads_to from Step_options);".format(idAdventure))
 
     return init_step_adventure
 
@@ -150,7 +150,7 @@ def getChoices(idGame):
     conn = connectToDB()
     cursor = conn.cursor()
 
-    choices_query=cursor.execute(f"SELECT id_step_adventure, id_step_option from Game_has_choices where id_game = {idGame}")
+    choices_query=cursor.execute("SELECT id_step_adventure, id_step_option from Game_has_choices where id_game = {}".format(idGame))
     choices_list=[]
     for row in choices_query:
         choices_list.append((row[0],row[1]))
@@ -180,7 +180,7 @@ def insertCurrentGame(idGame, idUser, idChar, idAdventure):
     # Aquesta funció insereix un nou registre de “game” a la BBDD
     conn = connectToDB()
     cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO Games (id_game, id_user, id_character,id_adventure) VALUES ({idGame},{idUser},{idChar},{idAdventure})")
+    cursor.execute("INSERT INTO Games (id_game, id_user, id_character,id_adventure) VALUES ({},{},{},{})".format(idGame,idUser,idChar,idAdventure))
     saveAndCloseDB(conn, cursor)
     return
 
@@ -239,10 +239,9 @@ def insertUser(id, user, password):
     # Aquesta funció ens servirà per inserir un usuari a la BBDD un cop hàgim creat.
     conn = connectToDB()
     cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO Users (id, user, password) VALUES ({id},{user},{password})")
+    cursor.execute("INSERT INTO Users (id_user, username, password) VALUES ({},{},{})".format(id,user,password))
     saveAndCloseDB(conn, cursor)
     return
-
 
 # COMPLETADA
 def get_table(query):
@@ -270,7 +269,7 @@ def checkUserbdd(user, password):
     # Si password no és correcte, retorna -1, si tot és correcte, retorna 1
     conn = connectToDB()
     cursor = conn.cursor()
-    consulta = f"SELECT password FROM Users where username='{user}';"
+    consulta = "SELECT password FROM Users where username='{}';".format(user)
     cursor.execute(consulta)
     row = cursor.fetchone()
     if row is None:
@@ -285,7 +284,7 @@ def insertCurrentChoice(idGame,actual_id_step,id_answer):
 
     conn=connectToDB()
     cursor=conn.cursor()
-    cursor.execute(f"INSERT INTO Game_has_choices (Id_game, id_step_adventure, id_step_option) VALUES ({idGame},{actual_id_step},{id_answer});")
+    cursor.execute("INSERT INTO Game_has_choices (Id_game, id_step_adventure, id_step_option) VALUES ({},{},{});".format(idGame,actual_id_step,id_answer))
     saveAndCloseDB()
     return
 
@@ -298,9 +297,9 @@ def setIdGame():
     maxid=0
     for id in idgamelist:
         if id>maxid:
-            maxid=id
+            maxid=id+1
 
-    cursor.execute(f"INSERT INTO Games (id_game) VALUES ({maxid+1})")
+    cursor.execute("INSERT INTO Games (id_game) VALUES ({})".format(maxid))
     saveAndCloseDB(conn,cursor)
 
     return maxid+1
