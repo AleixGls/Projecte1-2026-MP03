@@ -180,10 +180,10 @@ def getFormatedAdventures(adventures):
     datos=""
     for adventureId in adventures:
         cont=0
-        datos+=(f"{adventureId}".ljust(t_size_columns[cont]))
+        datos+=(str(adventureId).ljust(t_size_columns[cont]))
         for item in (adventures[adventureId]):
             cont+=1
-            datos += (f"{adventures[adventureId][item]}".ljust(t_size_columns[cont]))
+            datos += (str(adventures[adventureId][item]).ljust(t_size_columns[cont]))
         datos+="\n"
     return cabecera+"\n"+datos
 
@@ -193,7 +193,7 @@ def getFormatedAnswers(idAnswer, text, lenLine, leftMargin):
     # i ens retorna la resposta amb els paràmetres passats. Aquesta funció ens serà útil per a presentar les
     # respostes possibles en cadascun dels passos. Observem que en formatar les línies, no tallem cap paraula per la
     # meitat
-    answer=(f"{idAnswer}) {text}")
+    answer=("{}) {}".format(idAnswer,text))
     formatedAnswer=formatText(answer,lenLine)
     return formatedAnswer.ljust(leftMargin)
 
@@ -208,7 +208,7 @@ def getHeadeForTableFromTuples(t_name_columns, t_size_columns, title=""):
         t_name=t_name_columns[i]
         t_size=t_size_columns[i]
         cabecera_ancho+=t_size
-        cabecera+=(f"{t_name}".ljust(t_size))
+        cabecera+=(str(t_name).ljust(t_size))
     return(title.center(cabecera_ancho,"=")+"\n"+cabecera+"\n"+"".center(cabecera_ancho,"*"))
 # COMPLETADA
 def getTableFromDict(tuple_of_keys, weigth_of_columns, dict_of_data):

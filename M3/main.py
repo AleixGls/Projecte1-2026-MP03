@@ -47,7 +47,7 @@ def login_user():
             if user in users:
                 game_context['idUser'] = users[user]['idUser']
                 game_context['username'] = user
-                print(f"¡Bienvenido, {user}!")
+                print("¡Bienvenido, {}!".format(user))
                 return True
         return False
 
@@ -163,8 +163,8 @@ def play_adventure():
     first_step = BBDD.get_first_step_adventure(game_context['idAdventure'])
     current_step = first_step
     
-    print(Auxiliars.getHeader(f"COMIENZA LA AVENTURA: {game_context['adventureName']}"))
-    print(f"Personaje: {game_context['characterName']}")
+    print(Auxiliars.getHeader("COMIENZA LA AVENTURA: {}".format(game_context['adventureName'])))
+    print("Personaje: {}".format(game_context['characterName']))
     print("-" * 105)
     
     # Bucle principal del juego
@@ -269,8 +269,8 @@ def replay_adventure():
                     
                     for step_id, choice_id in choices:
                         # Aquí mostrarías cada paso y elección
-                        print(f"\nPaso: {step_id}")
-                        print(f"Elección: {choice_id}")
+                        print("\nPaso: {}".format(step_id))
+                        print("Elección: {}".format(choice_id))
                         input("Presiona Enter para continuar...")
                     
                     print("\nReplay completado.")
@@ -337,23 +337,13 @@ def show_reports():
     print("\n3. AVENTURAS JUGADAS POR USUARIO:")
     user_to_check = input("Introduce el nombre de usuario a consultar: ").strip()
     
-    query3 = f"""
-    SELECT 
-        g.id_adventure,
-        a.name as nombre_aventura,
-        g.date as fecha_partida
-    FROM Games g
-    JOIN Adventures a ON g.id_adventure = a.id_adventure
-    JOIN Users u ON g.id_user = u.id_user
-    WHERE u.username = '{user_to_check}'
-    ORDER BY g.date DESC
-    """
+    query3 = ("SELECT g.id_adventure, a.name as nombre_aventura, g.date as fecha_partida FROM Games g JOIN Adventures a ON g.id_adventure = a.id_adventure JOIN Users u ON g.id_user = u.id_user) WHERE u.username = '{}' ORDER BY g.date DESC".format(user_to_check)
     
     try:
         report3 = BBDD.get_table(query3)
-        print(Auxiliars.getFormatedTable(report3, f"Aventuras jugadas por {user_to_check}"))
+        print(Auxiliars.getFormatedTable(report3, "Aventuras jugadas por {}".format(user_to_check)))
     except:
-        print(f"Error al generar el informe para {user_to_check}")
+        print("Error al generar el informe para {}".format(user_to_check))
 
 # ============================================
 # 3. MENÚ PRINCIPAL
@@ -369,21 +359,21 @@ def main_menu():
         # DEBUG
         # USER
         if game_context["idUser"]:
-            print(f"Usuario: {game_context['idUser']}")
+            print("Usuario: {}".format(game_context['idUser']))
         if game_context['username']:
-            print(f"Nombre usuario: {game_context['username']}")
+            print("Nombre usuario: {}".format(game_context['username']))
 
         # ADVENTURE
         if game_context["idAdventure"]:
-            print(f"Aventura: {game_context['idAdventure']}")
+            print("Aventura: {}".format(game_context['idAdventure']))
         if game_context["adventureName"]:
-            print(f"Nombre Aventura: {game_context['adventureName']}")
+            print("Nombre Aventura: {}".format(game_context['adventureName']))
 
         # CHARACTER
         if game_context["idChar"]:
-            print(f"Personaje: {game_context['idChar']}")
+            print("Personaje: {}".format(game_context['idChar']))
         if game_context["characterName"]:
-            print(f"Nombre personaje: {game_context['characterName']}")
+            print("Nombre personaje: {}".format(game_context['characterName']))
         
         # User loggeado
         user_logged_in = game_context["idUser"] and game_context['username']
@@ -497,7 +487,7 @@ if __name__ == "__main__":
             print("Error: No se pudo conectar a la base de datos.")
             exit()
     except Exception as e:
-        print(f"Error de conexión: {e}")
+        print("Error de conexión: {}".format(e))
         exit()
     
     # Iniciar menú principal
