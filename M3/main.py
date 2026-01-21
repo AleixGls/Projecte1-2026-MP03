@@ -86,7 +86,6 @@ def create_user():
         else:
             new_id = 1
             
-        # Insertar en BD (necesitarías implementar BBDD.insertUser)
         BBDD.insertUser(new_id,user,password)
         print("Usuario creado correctamente. Ahora puedes hacer login.")
         print("Enter to continue: ")
@@ -101,9 +100,10 @@ def select_adventure():
         print("No hay aventuras disponibles.")
         return None
     
-    print(Auxiliars.getHeadeForTableFromTuples(("Id Aventura","Aventura","Descripcion"), (20,40,41),"Aventuras"))
+
+    print(Auxiliars.getHeadeForTableFromTuples(("Id Aventura","Aventura","Descripcion"), (25,40,40),"Aventuras"))
     for i in adventures:
-        print(Auxiliars.getFormatedBodyColumns((str(i)+")",adventures[i]["name"],adventures[i]["description"]),(20,40,41),0))
+        print(Auxiliars.getFormatedBodyColumns((str(i)+")",adventures[i]["name"],adventures[i]["description"]),(25,40,40),0))
     
     aventura = Auxiliars.getOpt("0) Para salir","Elige un personaje: ",[],adventures,[0])
     
@@ -123,10 +123,10 @@ def select_character():
         print("No hay personajes disponibles.")
         return None
     
-    print(Auxiliars.getHeadeForTableFromTuples(("Id Personaje","Personaje","Descripcion"), (20,40,41),"Personajes"))
+    print(Auxiliars.getHeadeForTableFromTuples(("Id Personaje","Personaje","Descripcion"), (25,40,40),"Personajes"))
     for i in characters:
-        print(Auxiliars.getFormatedBodyColumns((str(i)+")",characters[i]["name"],characters[i]["description"]),(20,40,41),0))
-  
+        print(Auxiliars.getFormatedBodyColumns((str(i)+")",characters[i]["name"],characters[i]["description"]),(25,40,40),0))
+
     personaje = Auxiliars.getOpt("0) Para salir","Elige un personaje: ",[],characters,[0])
     
     if personaje != 0:
@@ -135,14 +135,15 @@ def select_character():
     else:
         game_context["idChar"] = None
         game_context["characterName"] = None
-        
-    
 
 #TODO
 def play_adventure():
     """Jugar una aventura completa"""
     if not game_context['idAdventure']:
         print("Primero selecciona una aventura.")
+        return
+    if not game_context['idChar']:
+        print("Primero selecciona un personaje.")
         return
     
     # Crear nuevo juego en BD
@@ -358,12 +359,9 @@ def main_menu():
     flag_menu = True
     while flag_menu:
         print(Auxiliars.getHeader("CHOOSE YOUR STORY"))
-
-        # DEBUG
-        # USER
-        if game_context["idUser"]:
-            print("Usuario: {}".format(game_context['idUser']))
+        
         if game_context['username']:
+            print("Usuario: {}".format(game_context['idUser']))
             print("Nombre usuario: {}".format(game_context['username']))
 
         # ADVENTURE
@@ -377,7 +375,6 @@ def main_menu():
             print("Personaje: {}".format(game_context['idChar']))
         if game_context["characterName"]:
             print("Nombre personaje: {}".format(game_context['characterName']))
-        
         # User loggeado
         user_logged_in = game_context["idUser"] and game_context['username']
         
@@ -392,6 +389,12 @@ def main_menu():
             # Login en usuario
             if choice == 1:
                 login_user()
+
+                user_logged_in = game_context["idUser"] and game_context['username']
+
+                if user_logged_in:
+                    select_adventure()
+                    select_character()
 
             # Crear usuario
             elif choice == 2:
@@ -418,7 +421,7 @@ def main_menu():
             #CHARACTER
             elif choice == 7:
                 select_character()
-          
+
             #PLAY
             elif choice == 8:
                 if not game_context['idUser']:
