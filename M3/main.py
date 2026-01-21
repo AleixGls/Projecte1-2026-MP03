@@ -96,9 +96,9 @@ def select_adventure():
         print("No hay aventuras disponibles.")
         return None
     
-    print(Auxiliars.getHeadeForTableFromTuples(("Id Aventura","Aventura","Descripcion"), (20,40,41),"Aventuras"))
+    print(Auxiliars.getHeadeForTableFromTuples(("Id Aventura","Aventura","Descripcion"), (25,40,40),"Aventuras"))
     for i in adventures:
-        print(Auxiliars.getFormatedBodyColumns((str(i)+")",adventures[i]["name"],adventures[i]["description"]),(20,40,41),0))
+        print(Auxiliars.getFormatedBodyColumns((str(i)+")",adventures[i]["name"],adventures[i]["description"]),(25,40,40),0))
     
     aventura = Auxiliars.getOpt("0) Para salir","Elige un personaje: ",[],adventures,[0])
     
@@ -118,9 +118,9 @@ def select_character():
         print("No hay personajes disponibles.")
         return None
     
-    print(Auxiliars.getHeadeForTableFromTuples(("Id Personaje","Personaje","Descripcion"), (20,40,41),"Personajes"))
+    print(Auxiliars.getHeadeForTableFromTuples(("Id Personaje","Personaje","Descripcion"), (25,40,40),"Personajes"))
     for i in characters:
-        print(Auxiliars.getFormatedBodyColumns((str(i)+")",characters[i]["name"],characters[i]["description"]),(20,40,41),0))
+        print(Auxiliars.getFormatedBodyColumns((str(i)+")",characters[i]["name"],characters[i]["description"]),(25,40,40),0))
   
     personaje = Auxiliars.getOpt("0) Para salir","Elige un personaje: ",[],characters,[0])
     
