@@ -139,6 +139,9 @@ def play_adventure():
     if not game_context['idAdventure']:
         print("Primero selecciona una aventura.")
         return
+    if not game_context['idChar']:
+        print("Primero selecciona un personaje.")
+        return
     
     # Crear nuevo juego en BD
     game_ids = BBDD.getIdGames()
@@ -354,7 +357,6 @@ def main_menu():
     flag_menu = True
     while flag_menu:
         print(Auxiliars.getHeader("CHOOSE YOUR STORY"))
-
         
         if game_context['username']:
             print("Usuario: {}".format(game_context['idUser']))
