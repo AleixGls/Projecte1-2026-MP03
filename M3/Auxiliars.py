@@ -1,8 +1,11 @@
+import BBDD
+import datetime
 # COMPLETADA
 def formatText(text, lenLine, split="\n"):
     # A aquesta funció li passem un text, i ens retorna el mateix text de manera que cada línia té com a màxim
     # lenline d'ample, entre línia i línia coŀloquem el separador "split", que normalment serà un salt de línia. No
     # es tallen les paraules, sempre s'arrodoneix a l'últim espai abans de lenline.
+    text+=" "
     word = ""
     phrase = ""
     count = 0
@@ -32,7 +35,7 @@ def getHeader(text):
     return header
 
 
-# HACER
+# COMPLETADA?
 def getFormatedBodyColumns(tupla_texts,tupla_sizes,margin=0):
     # A aquesta funció li passem una tupla amb textos, l'ample de cada columna, i el marge que ha d'haver-hi entre cada columna i ens retorna els textos formatats segons l'ample i el marge que hem indicat.
     
@@ -165,31 +168,49 @@ def getFormatedBodyColumns(tupla_texts,tupla_sizes,margin=0):
 
 
 
-# HACER
+# COMPLETADA
 def getFormatedAdventures(adventures):
     # A aquesta funció li passem el diccionari adventures i retorna una cadena que una vegada impresa ens mostra: La
     # capçalera de la selecció d'aventures i les aventures amb id, títol i descripció de les aventures formatades en
     # columnes.
-    pass
+    t_name_columns=("Id Adventure", "Adventure","Description")
+    t_size_columns=(15,30,50)
+    cabecera=getHeadeForTableFromTuples(t_name_columns, t_size_columns,"Adventures")
 
+    datos=""
+    for adventureId in adventures:
+        cont=0
+        datos+=(f"{adventureId}".ljust(t_size_columns[cont]))
+        for item in (adventures[adventureId]):
+            cont+=1
+            datos += (f"{adventures[adventureId][item]}".ljust(t_size_columns[cont]))
+        datos+="\n"
+    return cabecera+"\n"+datos
 
-# HACER
+# COMPLETADA
 def getFormatedAnswers(idAnswer, text, lenLine, leftMargin):
     # A aquesta funció li passem un id de resposta, el text de la resposta, longitud de la línia i marge a la dreta,
     # i ens retorna la resposta amb els paràmetres passats. Aquesta funció ens serà útil per a presentar les
     # respostes possibles en cadascun dels passos. Observem que en formatar les línies, no tallem cap paraula per la
     # meitat
-    pass
+    answer=(f"{idAnswer}) {text}")
+    formatedAnswer=formatText(answer,lenLine)
+    return formatedAnswer.ljust(leftMargin)
 
 
-# HACER duda: el title para qué sirve
+# COMPLETADA
 def getHeadeForTableFromTuples(t_name_columns, t_size_columns, title=""):
     # Aquesta funció, rep una tupla amb els noms de les capçaleres de les columnes (t_name_columns) i una tupla amb
     # les seves grandàries t_size_columns i ens retorna una capçalera formatada segons els paràmetres passats.
-    pass
-
-
-# SEMIHECHO duda: el datetime qué es? no se formata y si se pasa como una lista jode los tamaños
+    cabecera=""
+    cabecera_ancho=0
+    for i in range(0, len(t_name_columns)):
+        t_name=t_name_columns[i]
+        t_size=t_size_columns[i]
+        cabecera_ancho+=t_size
+        cabecera+=(f"{t_name}".ljust(t_size))
+    return(title.center(cabecera_ancho,"=")+"\n"+cabecera+"\n"+"".center(cabecera_ancho,"*"))
+# COMPLETADA
 def getTableFromDict(tuple_of_keys, weigth_of_columns, dict_of_data):
     # A aquesta funció li passem com a paràmetres, un diccionari del tipus {id: {diccionari amb dades}}
     # Una tupla amb les keys que ens interessa.
@@ -202,20 +223,17 @@ def getTableFromDict(tuple_of_keys, weigth_of_columns, dict_of_data):
     #                 5: {'idUser': 2, 'Username': 'Jordi', 'idAdventure': 1, 'Name': 'Este muerto esta muy vivo',
     #                     'date': datetime.datetime(2021, 11, 26, 13, 28, 36), 'idCharacter': 1, 'CharacterName': 'Beowulf'}}
     # I ens retorna un string que imprès té forma de taula, amb les dades corresponents a les keys que passem i formatades amb les grandàries donades
-    cabecera = "|" + "id".center(6) + "|"
     datos = ""
-    for key in range(0, len(tuple_of_keys)):
-        cabecera += tuple_of_keys[key].center(weigth_of_columns[key]) + "|"
 
     for dicto in dict_of_data:
-        datos += "\n" + "|" + str(dicto).center(6) + "|"
+        datos += str(dicto).ljust(10)
         for key in range(0, len(tuple_of_keys)):
             if tuple_of_keys[key] in dict_of_data[dicto]:
-                datos += str(dict_of_data[dicto][tuple_of_keys[key]]).center(weigth_of_columns[key]) + "|"
-    tabla = cabecera + datos
-    return tabla
-
-
+                if tuple_of_keys[key]=='date':
+                    dict_of_data[dicto][tuple_of_keys[key]].strftime("%Y/%m/%d  %H:%M:%S")
+                datos += str(dict_of_data[dicto][tuple_of_keys[key]]).ljust(weigth_of_columns[key])
+        datos+="\n"
+    return datos
 # COMPLETADA
 def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[]):
     # Aquesta funció ens prepara un menú en mode text.
@@ -272,7 +290,7 @@ def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[])
             else:
                 print("\nOpcio no valida.")
 
-# HACER
+# HACER #Para esto se necesitan los informes
 def getFormatedTable(queryTable,title=""):
     # Aquesta funció rep una taula del tipus que retorna la funció "getTable" i ens formata el contingut de la taula per a presentar-lo per pantalla.
     # Aquesta funció ens servirà per mostrar els informes.
@@ -286,9 +304,6 @@ def getFormatedTable(queryTable,title=""):
     # Aquesta funció ens retornarà un string que es pot imprimir.
     pass
 
-# HACER
-def getFormatedTable(queryTable, title=""):
-    pass
 
 
 # COMPLETADA
@@ -357,16 +372,22 @@ def checkUser(user):
         return True
 
 
-# HACER
+# COMPLETADA
 def userExists(user):
     # Funció que ens retorna True si l’usuari existeix, o False si no existeix.
-    pass
+    userlist=BBDD.getUsers()
+    for name in userlist:
+        if user==name:
+            return True
+    return False
 
-
-# HACER
+# HACER Esto creo que hay que implementar el main, basicamente que sea el juego pero no puedas elegir opcion, coja automaticamente la de la tupla
 def replay(choices):
     # Aquesta funció serà l'encarregada de fer-nos el replay d'una aventura ja jugada, una vegada hàgim triat el idGame que volem reviure.
     # Li passarem una tupla de tuples del tipus: ((pas, selecció), (pas, selecció),(pas, selecció)... )
     # Amb tots els passos i seleccions que es van fer en aquesta aventura i ens mostrarà l'aventura pas a pas
     # com si l'estiguéssim jugant de nou, però en comptes de demanar-nos triar un pas, ens demanarà que cliquem "Enter" per a continuar.
     pass
+
+caca=((101,109),(120,192),(110,304))
+replay(caca)

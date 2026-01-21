@@ -104,7 +104,7 @@ def get_characters():
 
     characters = {}
     for row in cursor.fetchall():
-        characters[0] = {
+        characters[row[0]] = {
             "name": row[1],
             "description": row[2]}
 
@@ -185,7 +185,7 @@ def insertCurrentGame(idGame, idUser, idChar, idAdventure):
     return
 
 
-# HACER
+# COMPLETADA
 def getUsers():
     # Aquesta funció ens retorna un diccionari del tipus:
     # {
@@ -194,7 +194,16 @@ def getUsers():
     # }
     conn = connectToDB()
     cursor = conn.cursor()
-    pass
+    cursor.execute("SELECT * FROM Users")
+
+    users = {}
+    for row in cursor.fetchall():
+        users[row[1]] = {
+            "passwordDelUsuari": row[2],
+            "idUser": row[0]}
+    saveAndCloseDB(conn, cursor)
+    return users
+
 
 
 # COMPLETADA
@@ -247,11 +256,13 @@ def get_table(query):
         columns.append(i[0])
 
     column_names = tuple(columns)
-    rows = cursor.fetchall()
+    rows = []
+    row_query=cursor.fetchall()
+    for row in row_query:
+        rows.append(tuple(row))
 
     saveAndCloseDB(conn,cursor)
     return (column_names,) + tuple(rows)
-
 
 # COMPLETADA
 def checkUserbdd(user, password):
@@ -270,10 +281,27 @@ def checkUserbdd(user, password):
         return 1
     saveAndCloseDB(conn, cursor)
 
+def insertCurrentChoice(idGame,actual_id_step,id_answer):
 
-# HACER
+    conn=connectToDB()
+    cursor=conn.cursor()
+    cursor.execute(f"INSERT INTO Game_has_choices (Id_game, id_step_adventure, id_step_option) VALUES ({idGame},{actual_id_step},{id_answer});")
+    saveAndCloseDB()
+    return
+
+# NO HECHA (no entiendo que esté esta función y otra exactamente igual, la de insertcurrentgame, esta por ahora peta)
 def setIdGame():
     # Aquesta funció actualitza la bbdd amb un nou game.
     conn = connectToDB()
     cursor = conn.cursor()
-    pass
+    idgamelist=getIdGames()
+    maxid=0
+    for id in idgamelist:
+        if id>maxid:
+            maxid=id
+
+    cursor.execute(f"INSERT INTO Games (id_game) VALUES ({maxid+1})")
+    saveAndCloseDB(conn,cursor)
+
+    return maxid+1
+
