@@ -29,8 +29,11 @@ def login_user():
     print(Auxiliars.getHeader("LOGIN"))
     
     while True:
-        user = input("Usuario: ").strip()
-        password = input("Contraseña: ").strip()
+        user = input("Usuario: ")
+        user=str(user)
+        password = input("Contraseña: ")
+        password=str(password)
+        a="a"
         
         check_result = BBDD.checkUserbdd(user, password)
         
@@ -185,7 +188,7 @@ def play_adventure():
             flag_exit
         
         # Obtener opciones para este paso
-        available_options = {}
+            available_options = {}
         for opt_id, opt_data in options.items():
             # Aquí necesitarías una función para obtener opciones por paso
             # Por ahora, muestra todas las opciones disponibles
@@ -337,7 +340,7 @@ def show_reports():
     print("\n3. AVENTURAS JUGADAS POR USUARIO:")
     user_to_check = input("Introduce el nombre de usuario a consultar: ").strip()
     
-    query3 = ("SELECT g.id_adventure, a.name as nombre_aventura, g.date as fecha_partida FROM Games g JOIN Adventures a ON g.id_adventure = a.id_adventure JOIN Users u ON g.id_user = u.id_user) WHERE u.username = '{}' ORDER BY g.date DESC".format(user_to_check)
+    query3 = ("SELECT g.id_adventure, a.name as nombre_aventura, g.date as fecha_partida FROM Games g JOIN Adventures a ON g.id_adventure = a.id_adventure JOIN Users u ON g.id_user = u.id_user) WHERE u.username = '%s' ORDER BY g.date DESC",(user_to_check))
     
     try:
         report3 = BBDD.get_table(query3)
