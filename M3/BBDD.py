@@ -239,10 +239,9 @@ def insertUser(id, user, password):
     # Aquesta funció ens servirà per inserir un usuari a la BBDD un cop hàgim creat.
     conn = connectToDB()
     cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO Users (id, user, password) VALUES ({id},{user},{password})")
+    cursor.execute(f"INSERT INTO Users (id_user, username, password) VALUES ({id},{user},{password})")
     saveAndCloseDB(conn, cursor)
     return
-
 
 # COMPLETADA
 def get_table(query):

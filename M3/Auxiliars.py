@@ -326,15 +326,19 @@ def checkPassword(password):
         for a in password:
             if a == " ":
                 error_msg = "El password no pot contenir espais. "
-            if a.isupper():
-                upper_bool = True
-            if a.islower():
-                lower_bool = True
-            if a.isnumeric():
-                number_bool = True
-            if not a.isalnum():
-                if a.isascii():
-                    specialchar_bool = True
+            if not upper_bool:
+                if a.isupper():
+                    upper_bool = True
+            if not lower_bool:
+                if a.islower():
+                    lower_bool = True
+            if not number_bool:
+                if a.isnumeric():
+                    number_bool = True
+            if not specialchar_bool:
+                if not a.isalnum():
+                    if a.isascii():
+                        specialchar_bool = True
         if upper_bool == False:
             error_msg = "El password no conté almenys una majúscula. "
         elif lower_bool == False:
@@ -358,13 +362,11 @@ def checkUser(user):
     error_msg = ""
     alnum_bool = True
     if len(user) < 6:
-        error_msg = "El password té menys de 6 caràcters. "
+        error_msg = "El nombre de usuario tiene menos de 6 carácteres. "
     elif len(user) > 10:
-        error_msg = "El password té més de 10 caràcters. "
-    else:
-        for a in user:
-            if not a.isalnum():
-                error_msg = "El nom d'usuari només pot contenir caràcters alfanumérics. "
+        error_msg = "El nombre de usuario tiene más de 10 carácteres. "
+    elif not user.isalnum():
+        error_msg = "El nom d'usuari només pot contenir caràcters alfanumérics. "
     if error_msg != "":
         print(error_msg)
         return False
