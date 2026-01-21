@@ -53,7 +53,7 @@ def get_adventures_with_chars():
 
     adventures = {}
     for row in cursor.fetchall():
-        adventures[0] = {
+        adventures[row[0]] = {
             "name": row[1],
             "description": row[2]}
 
