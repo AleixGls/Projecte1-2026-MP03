@@ -92,6 +92,7 @@ El juego se ejecuta en consola y muestra menús interactivos para jugar, consult
 Proyecto desarrollado por estudiantes como parte de un trabajo académico.
 
 *Aleix Linares Sousa*
+
 *Marc Pino Reina*
 
 ## 📄 Licencia
