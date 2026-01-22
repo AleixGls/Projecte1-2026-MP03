@@ -87,6 +87,14 @@ El juego se ejecuta en consola y muestra menús interactivos para jugar, consult
 * Informes estadísticos desde la BBDD
 * Replay de aventuras jugadas
 
+## 🌐 Página web
+
+Puedes acceder a la pagina web del proyecto en el siguiente enlace:
+
+👉 [https://aleixgls.github.io/Projecte1-2026-MP03/](https://aleixgls.github.io/Projecte1-2026-MP03/)
+
+---
+
 ## 👥 Autores
 
 Proyecto desarrollado por estudiantes como parte de un trabajo académico.
