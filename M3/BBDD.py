@@ -1,3 +1,4 @@
+import datetime
 
 import pymysql
 
@@ -26,15 +27,16 @@ def get_answers_bystep_adventure(idAdventure):
     conn = connectToDB()  # Conexión a la base de datos
     cursor = conn.cursor()  # Abrimos el cursor
     cursor.execute(
-        "SELECT Id_step_option, leads_to, description FROM Step_options WHERE id_step_adventure in (SELECT id_step_adventure from Step_adventures where id_adventure = %s);",(idAdventure,))
+        "SELECT Id_step_option, Id_step_adventure, leads_to, description FROM Step_options WHERE id_step_adventure in (SELECT id_step_adventure from Step_adventures where id_adventure = %s);",(idAdventure,))
     step_option_query = cursor.fetchall()
 
     options_dict = {}
 
     for row in step_option_query:
         options_dict[row[0]] = {
-            'Leads_to': row[1],
-            'Description': row[2]
+            'Id_step_adventure': row[1],
+            'Leads_to': row[2],
+            'Description': row[3]
         }
 
     saveAndCloseDB(conn, cursor)
@@ -180,7 +182,7 @@ def insertCurrentGame(idGame, idUser, idChar, idAdventure):
     # Aquesta funció insereix un nou registre de “game” a la BBDD
     conn = connectToDB()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO Games (id_game, id_user, id_character,id_adventure) VALUES (%s,%s,%s,%s)",(idGame,idUser,idChar,idAdventure))
+    cursor.execute("INSERT INTO Games (id_game, id_user, id_character,id_adventure, date) VALUES (%s,%s,%s,%s,%s)",(idGame,idUser,idChar,idAdventure,datetime.datetime.now()))
     saveAndCloseDB(conn, cursor)
     return
 
@@ -294,7 +296,7 @@ def insertCurrentChoice(idGame,actual_id_step,id_answer):
     conn=connectToDB()
     cursor=conn.cursor()
     cursor.execute("INSERT INTO Game_has_choices (Id_game, id_step_adventure, id_step_option) VALUES (%s,%s,%s);",(idGame,actual_id_step,id_answer))
-    saveAndCloseDB()
+    saveAndCloseDB(conn,cursor)
     return
 
 # NO HECHA (no entiendo que esté esta función y otra exactamente igual, la de insertcurrentgame, esta por ahora peta)

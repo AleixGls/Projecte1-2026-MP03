@@ -268,27 +268,16 @@ def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[])
 
         #Menu
         print(textOpts)
-        opt_str = input(inputOptText)
+        opt = input(inputOptText)
 
-        # Comprobante int
-        try:
-            opt_int = int(opt_str)
-            if opt_int in rangeList or opt_int in dictionary or opt_int in exceptions:
-                return opt_int
 
-        # Comprobante string
-        except:
-            if opt_str in rangeList or opt_str in dictionary or opt_str in exceptions:
-                return opt_str
-            else:
-                print("\nOpcio no valida.")
-
-        # Comprobante string del int
+        opt_int = int(opt)
+        if opt_int in rangeList or opt_int in dictionary or opt_int in exceptions:
+            return opt_int
+        elif opt in rangeList or opt in dictionary or opt in exceptions:
+            return opt
         else:
-            if opt_str in rangeList or opt_str in dictionary or opt_str in exceptions:
-                return opt_str
-            else:
-                print("\nOpcio no valida.")
+            print("\nOpcio no valida.")
 
 # HACER #Para esto se necesitan los informes
 def getFormatedTable(queryTable,title=""):
