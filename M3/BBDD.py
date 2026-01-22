@@ -247,23 +247,28 @@ def insertUser(id, user, password):
     return
 
 # COMPLETADA
-def get_table(query):
+def get_table(query, params=None):
     # Aquesta funció rebrà una query i ens retornarà el resultat de la query en una tupla de tuples.
     # La tupla 0 serà una tupla amb els noms de les columnes de la query i la resta de tuples seran les files de la query.
     conn = connectToDB()
     cursor = conn.cursor()
-    cursor.execute(query)
+    
+    if params:
+        cursor.execute(query, params)
+    else:
+        cursor.execute(query)
+    
     columns = []
     for i in cursor.description:
         columns.append(i[0])
-
+    
     column_names = tuple(columns)
     rows = []
-    row_query=cursor.fetchall()
+    row_query = cursor.fetchall()
     for row in row_query:
         rows.append(tuple(row))
-
-    saveAndCloseDB(conn,cursor)
+    
+    saveAndCloseDB(conn, cursor)
     return (column_names,) + tuple(rows)
 
 # COMPLETADA
