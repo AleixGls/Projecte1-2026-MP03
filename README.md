@@ -66,7 +66,7 @@ pip install pymysql
 * `alter_tables.sql`
 * `insert_data.sql`
 
-Estos scripts crean la estructura, relaciones y datos mínimos para poder jugar.
+Estos scripts crean la estructura, relaciones y datos.
 
 ## ▶️ Ejecución del juego
 
@@ -91,7 +91,7 @@ El juego se ejecuta en consola y muestra menús interactivos para jugar, consult
 
 Puedes acceder a la pagina web del proyecto en el siguiente enlace:
 
-👉 [https://aleixgls.github.io/Projecte1-2026-MP03/](https://aleixgls.github.io/Projecte1-2026-MP03/)
+[https://aleixgls.github.io/Projecte1-2026-MP03/](https://aleixgls.github.io/Projecte1-2026-MP03/)
 
 ---
 
