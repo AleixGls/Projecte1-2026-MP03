@@ -238,55 +238,56 @@ def play_adventure():
 
 #TODO
 def replay_adventure():
-    replay_data = BBDD.getReplayAdventures()
-    
-    if not replay_data:
-        print("No hay partidas guardadas para rejugar.")
-        return
-    
-    # Mostrar partidas disponibles
-    print(Auxiliars.getHeader("PARTIDAS GUARDADAS"))
-    
-    # Formatear como tabla
-    table_data = {}
-    for game_id, game_data in replay_data.items():
-        table_data[game_id] = game_data
-    
-    formatted = Auxiliars.getTableFromDict(
-        ("Username", "Name", "CharacterName", "date"),
-        (20, 30, 20, 30),
-        table_data
-    )
-    print(formatted)
-    
-    # Seleccionar partida
-    while True:
-        try:
-            game_choice = int(input("\nSelecciona el ID de la partida a rejugar (0 para cancelar): "))
-            if game_choice == 0:
-                return
-            elif game_choice in replay_data:
-                # Obtener decisiones de esa partida
-                choices = BBDD.getChoices(game_choice)
-                if choices:
-                    # Implementar replay (mostrar sin interactuar)
-                    print("\nIniciando replay... (presiona Enter para avanzar)")
-                    input("Presiona Enter para comenzar...")
-                    
-                    for step_id, choice_id in choices:
-                        # Aquí mostrarías cada paso y elección
-                        print("\nPaso: {}".format(step_id))
-                        print("Elección: {}".format(choice_id))
-                        input("Presiona Enter para continuar...")
-                    
-                    print("\nReplay completado.")
-                else:
-                    print("No hay datos de decisiones para esta partida.")
-                break
-            else:
-                print("ID de partida no válido.")
-        except ValueError:
-            print("Por favor, introduce un número.")
+    print("OPCION NO DISPONIBLE, NO HA DADO TIEMPO A HACERLA")
+    #replay_data = BBDD.getReplayAdventures()
+    #
+    #if not replay_data:
+    #    print("No hay partidas guardadas para rejugar.")
+    #    return
+    #
+    ## Mostrar partidas disponibles
+    #print(Auxiliars.getHeader("PARTIDAS GUARDADAS"))
+    #
+    ## Formatear como tabla
+    #table_data = {}
+    #for game_id, game_data in replay_data.items():
+    #    table_data[game_id] = game_data
+    #
+    #formatted = Auxiliars.getTableFromDict(
+    #    ("Username", "Name", "CharacterName", "date"),
+    #    (20, 30, 20, 30),
+    #    table_data
+    #)
+    #print(formatted)
+    #
+    ## Seleccionar partida
+    #while True:
+    #    try:
+    #        game_choice = int(input("\nSelecciona el ID de la partida a rejugar (0 para cancelar): "))
+    #        if game_choice == 0:
+    #            return
+    #        elif game_choice in replay_data:
+    #            # Obtener decisiones de esa partida
+    #            choices = BBDD.getChoices(game_choice)
+    #            if choices:
+    #                # Implementar replay (mostrar sin interactuar)
+    #                print("\nIniciando replay... (presiona Enter para avanzar)")
+    #                input("Presiona Enter para comenzar...")
+    #                
+    #                for step_id, choice_id in choices:
+    #                    # Aquí mostrarías cada paso y elección
+    #                    print("\nPaso: {}".format(step_id))
+    #                    print("Elección: {}".format(choice_id))
+    #                    input("Presiona Enter para continuar...")
+    #                
+    #                print("\nReplay completado.")
+    #            else:
+    #                print("No hay datos de decisiones para esta partida.")
+    #            break
+    #        else:
+    #            print("ID de partida no válido.")
+    #    except ValueError:
+    #        print("Por favor, introduce un número.")
 
 # Funciones para los informes
 
