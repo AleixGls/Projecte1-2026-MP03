@@ -519,22 +519,7 @@ def main_menu():
     flag_menu = True
     while flag_menu:
         print(Auxiliars.getHeader("CHOOSE YOUR STORY"))
-        
-        if game_context['username']:
-            print("Usuario: {}".format(game_context['idUser']))
-            print("Nombre usuario: {}".format(game_context['username']))
-
-        # ADVENTURE
-        if game_context["idAdventure"]:
-            print("Aventura: {}".format(game_context['idAdventure']))
-        if game_context["adventureName"]:
-            print("Nombre Aventura: {}".format(game_context['adventureName']))
-
-        # CHARACTER
-        if game_context["idChar"]:
-            print("Personaje: {}".format(game_context['idChar']))
-        if game_context["characterName"]:
-            print("Nombre personaje: {}".format(game_context['characterName']))
+    
         # User loggeado
         user_logged_in = game_context["idUser"] and game_context['username']
         
