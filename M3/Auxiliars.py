@@ -199,17 +199,20 @@ def getFormatedAnswers(idAnswer, text, lenLine, leftMargin):
 
 
 # COMPLETADA
-def getHeadeForTableFromTuples(t_name_columns, t_size_columns, title=""):
+def getHeadeForTableFromTuples(t_name_columns, t_size_columns, title="", margin=0):
     # Aquesta funció, rep una tupla amb els noms de les capçaleres de les columnes (t_name_columns) i una tupla amb
     # les seves grandàries t_size_columns i ens retorna una capçalera formatada segons els paràmetres passats.
-    cabecera=""
-    cabecera_ancho=0
+    cabecera = ""
+    cabecera_ancho = sum(t_size_columns) + (len(t_size_columns) - 1) * margin
     for i in range(0, len(t_name_columns)):
-        t_name=t_name_columns[i]
-        t_size=t_size_columns[i]
-        cabecera_ancho+=t_size
-        cabecera+=(str(t_name).ljust(t_size))
-    return(title.center(cabecera_ancho,"=")+"\n"+cabecera+"\n"+"".center(cabecera_ancho,"*"))
+        t_name = t_name_columns[i]
+        t_size = t_size_columns[i]
+        cabecera += (str(t_name).ljust(t_size))
+        if i < len(t_name_columns) - 1:
+            cabecera += (" " * margin)
+    return (title.center(cabecera_ancho, "=") + "\n" + cabecera + "\n" + "".center(cabecera_ancho, "*"))
+
+
 # COMPLETADA
 def getTableFromDict(tuple_of_keys, weigth_of_columns, dict_of_data):
     # A aquesta funció li passem com a paràmetres, un diccionari del tipus {id: {diccionari amb dades}}
@@ -279,19 +282,65 @@ def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[])
         else:
             print("\nOpcio no valida.")
 
+
 # HACER #Para esto se necesitan los informes
-def getFormatedTable(queryTable,title=""):
-    # Aquesta funció rep una taula del tipus que retorna la funció "getTable" i ens formata el contingut de la taula per a presentar-lo per pantalla.
-    # Aquesta funció ens servirà per mostrar els informes.
-    # S’ha de tenir en compte que l’amplada màxima que es pot fer servir a la consola en el cas dels reports és de 120, per tant, haurem de dividir aquests 120 entre les columnes que tingui la taula que hem de mostrar.
-    # Per exemple, si la funció getTable ens ha retornat:
-    # (
-    #   ('ID AVENTURA - NOMBRE', 'ID PASO - DESCRIPCION', 'ID RESPUESTA - DESCRIPCION', 'NUMERO VECES SELECCIONADA'), 
-    #   ('10 - Todos los h├®roes necesitan su princesa', '101 - Son las 6 de la ma├▒ana, %personaje% est├í profundamente dormido. Le suena la alarma!', '101 - Apaga la alarma porque quiere dormir, han sido d├¡as muy duros y %personaje% necesita un descanso.', 7),
-    #   ('10 - Todos los h├®roes necesitan su princesa', '103 - Nuestro h├®roe %personaje% se viste r├ípidamente y va an direcci├│n al ciber, hay mucho jaleo en la calle, tambi├®n mucha polic├¡a.', '108 - Entra en el ciber a revisar si la princesa Wyoming sigue dentro.', 5)
-    # )
-    # Aquesta funció ens retornarà un string que es pot imprimir.
-    pass
+def getFormatedTable(queryTable, title=""):
+    """
+    Formatea una tabla del tipo que retorna get_table para mostrarla por pantalla.
+    Ancho máximo: 120 caracteres.
+    Agrega una línea en blanco entre cada fila.
+    """
+    if not queryTable or len(queryTable) < 2:
+        return "No hay datos para mostrar.\n"
+    
+    # Obtener nombres de columnas y datos
+    columns = queryTable[0]
+    data_rows = queryTable[1:]
+    
+    num_columns = len(columns)
+    margin = 1
+    
+    # Si tenemos 4 columnas (como en el informe 1), usamos anchos específicos
+    if num_columns == 4:
+        # Para el informe de respuesta más usada
+        formats = [26, 35, 35, 21]
+    else:
+        # Calcular el ancho total disponible (120 menos los márgenes entre columnas)
+        total_width = 120 - ((num_columns - 1) * margin)
+        
+        # Distribuir el ancho equitativamente entre las columnas
+        base_width = total_width // num_columns
+        extra = total_width % num_columns
+        
+        # Asignar ancho base a todas las columnas y distribuir el extra
+        formats = [base_width] * num_columns
+        for i in range(extra):
+            formats[i] += 1
+    
+    # Crear cabecera con márgenes
+    header = getHeadeForTableFromTuples(columns, formats, title, margin)
+    
+    # Crear filas de datos
+    rows_text = ""
+    for i, row in enumerate(data_rows):
+        # Convertir todos los elementos a string
+        row_strings = []
+        for cell in row:
+            row_strings.append(str(cell))
+        
+        # Formatear la fila en columnas
+        formatted_row = getFormatedBodyColumns(
+            tuple(row_strings),
+            tuple(formats),
+            margin
+        )
+        rows_text += formatted_row
+        
+        # Agregar línea en blanco entre filas
+        rows_text += "\n"
+    
+    return header + "\n" + rows_text
+        
 
 
 

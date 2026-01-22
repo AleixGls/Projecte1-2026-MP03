@@ -23,7 +23,7 @@ game_context = {
 # 2. FUNCIONES PRINCIPALES DEL FLUJO
 # ============================================
 
-# REVISAR
+# COMPLETADA
 def login_user():
     """Función para login de usuario existente"""
     print(Auxiliars.getHeader("LOGIN"))
@@ -54,13 +54,13 @@ def login_user():
                 return True
         return False
 
-# REVISAR
+# COMPLETADA
 def logout():
     game_context['idUser'] = None
     game_context['username'] = None
     print("Sesión cerrada correctamente.")
 
-#TODO
+# COMPLETADA
 def create_user():
     print(Auxiliars.getHeader("CREAR NUEVO USUARIO"))
     
@@ -138,14 +138,14 @@ def select_character():
         game_context["idChar"] = None
         game_context["characterName"] = None
 
-#TODO
+# REVISAR
 def play_adventure():
     # checa que el context esté completo
     if not game_context['idAdventure']:
-        print("Primero selecciona una aventura.")
+        print("Error: No hay aventura seleccionada.")
         return
     if not game_context['idChar']:
-        print("Primero selecciona un personaje.")
+        print("Error: No hay personaje seleccionado.")
         return
 
     # nuevo id de juego y lo mete en el context
@@ -288,68 +288,107 @@ def replay_adventure():
         except ValueError:
             print("Por favor, introduce un número.")
 
+# Funciones para los informes
+
+def report_most_used_answer():
+    """Informe 1: Respuesta más usada por paso de cada aventura"""
+    query = """
+        SELECT 
+            CONCAT(a.id_adventure, ' - ', a.name) as 'ID AVENTURA - NOMBRE',
+            CONCAT(sa.id_step_adventure, ' - ', sa.description) as 'ID PASO - DESCRIPCIÓN',
+            CONCAT(so.id_step_option, ' - ', so.description) as 'ID RESPUESTA - DESCRIPCIÓN',
+            COUNT(*) as 'VECES SELECCIONADA'
+        FROM Game_has_choices ghc
+        INNER JOIN Games g ON ghc.id_game = g.id_game
+        INNER JOIN Step_adventures sa ON ghc.id_step_adventure = sa.id_step_adventure
+        INNER JOIN Adventures a ON sa.id_adventure = a.id_adventure
+        INNER JOIN Step_options so ON ghc.id_step_option = so.id_step_option
+        GROUP BY a.id_adventure, sa.id_step_adventure, so.id_step_option, 
+                 a.name, sa.description, so.description
+        ORDER BY a.id_adventure, COUNT(*) DESC
+    """
+    result = BBDD.get_table(query)
+    print(Auxiliars.getFormatedTable(result, "RESPUESTA MÁS USADA"))
+
+def report_player_most_games():
+    """Informe 2: Jugador con más partidas jugadas"""
+    query = """
+        SELECT 
+            u.username as 'NOMBRE USUARIO',
+            COUNT(g.id_game) as 'PARTIDAS JUGADAS'
+        FROM Users u
+        INNER JOIN Games g ON u.id_user = g.id_user
+        GROUP BY u.id_user
+        ORDER BY COUNT(g.id_game) DESC, MIN(g.date) ASC
+        LIMIT 1
+    """
+    result = BBDD.get_table(query)
+    print(Auxiliars.getFormatedTable(result, "JUGADOR CON MÁS PARTIDAS"))
+
+def report_user_adventures():
+    """Informe 3: Aventuras jugadas por un usuario específico"""
+    username = input("\nIntroduce el nombre de usuario: ")
+    
+    # Primero verificamos si el usuario existe
+    users = BBDD.getUsers()
+    if username not in users:
+        print(f"El usuario '{username}' no existe.")
+        return
+    
+    query = """
+        SELECT 
+            a.id_adventure as 'ID',
+            a.name as 'NOMBRE AVENTURA',
+            DATE_FORMAT(g.date, '%%Y-%%m-%%d %%H:%%i:%%s') as 'FECHA'
+        FROM Games g
+        INNER JOIN Adventures a ON g.id_adventure = a.id_adventure
+        INNER JOIN Users u ON g.id_user = u.id_user
+        WHERE u.username = %s
+        ORDER BY g.date DESC
+    """
+    result = BBDD.get_table(query, (username,))
+    
+    if len(result) > 1:  # Si hay resultados además de los nombres de columnas
+        print(Auxiliars.getFormatedTable(result, f"AVENTURAS DE {username}"))
+    else:
+        print(f"\nEl usuario '{username}' no ha jugado ninguna aventura.")
 
 #TODO
 def show_reports():
-    """Mostrar informes estadísticos"""
-    print(Auxiliars.getHeader("INFORMES ESTADÍSTICOS"))
-    
-    # 1. Respuesta más usada por paso
-    print("\n1. RESPUESTA MÁS USADA POR PASO:")
-    query1 = """
-    SELECT 
-        a.id_adventure, 
-        a.name as nombre_aventura,
-        sa.id_step_adventure,
-        sa.description as descripcion_paso,
-        so.id_step_option,
-        so.description as descripcion_respuesta,
-        COUNT(*) as veces_seleccionada
-    FROM Game_has_choices gc
-    JOIN Step_adventures sa ON gc.id_step_adventure = sa.id_step_adventure
-    JOIN Step_options so ON gc.id_step_option = so.id_step_option
-    JOIN Adventures a ON sa.id_adventure = a.id_adventure
-    GROUP BY so.id_step_option, sa.id_step_adventure, a.id_adventure
-    ORDER BY a.id_adventure, sa.id_step_adventure, veces_seleccionada DESC
-    """
-    
-    try:
-        report1 = BBDD.get_table(query1)
-        print(Auxiliars.getFormatedTable(report1, "Respuestas más usadas"))
-    except:
-        print("Error al generar el informe 1")
-    
-    # 2. Jugador que más ha jugado
-    print("\n2. JUGADOR CON MÁS PARTIDAS:")
-    query2 = """
-    SELECT 
-        u.username,
-        COUNT(g.id_game) as partidas_jugadas,
-        MIN(g.date) as primera_partida
-    FROM Games g
-    JOIN Users u ON g.id_user = u.id_user
-    GROUP BY u.id_user
-    ORDER BY partidas_jugadas DESC, primera_partida ASC
-    LIMIT 1
-    """
-    
-    try:
-        report2 = BBDD.get_table(query2)
-        print(Auxiliars.getFormatedTable(report2, "Jugador más activo"))
-    except:
-        print("Error al generar el informe 2")
-    
-    # 3. Aventuras jugadas por usuario específico
-    print("\n3. AVENTURAS JUGADAS POR USUARIO:")
-    user_to_check = input("Introduce el nombre de usuario a consultar: ").strip()
-    
-    query3 = ("SELECT g.id_adventure, a.name as nombre_aventura, g.date as fecha_partida FROM Games g JOIN Adventures a ON g.id_adventure = a.id_adventure JOIN Users u ON g.id_user = u.id_user) WHERE u.username = '%s' ORDER BY g.date DESC",(user_to_check))
-    
-    try:
-        report3 = BBDD.get_table(query3)
-        print(Auxiliars.getFormatedTable(report3, "Aventuras jugadas por {}".format(user_to_check)))
-    except:
-        print("Error al generar el informe para {}".format(user_to_check))
+    flag_menu = True
+    while flag_menu:
+        print(Auxiliars.getHeader("INFORMES"))
+        
+        opt = Auxiliars.getOpt(
+            "1) Respuesta más usada\n2) Jugador con más partidas jugadas\n3) Aventuras jugadas por usuario\n4) Volver al menú principal\n",
+            "\nElige una opción: ",
+            [1,2,3,4],{},[]
+        )
+        
+        if opt == 1:
+            print("\n" + "="*120)
+            print("INFORME 1: RESPUESTA MÁS USADA".center(120))
+            print("="*120)
+            report_most_used_answer()
+            input("\nPresiona Enter para continuar...")
+            
+        elif opt == 2:
+            print("\n" + "="*120)
+            print("INFORME 2: JUGADOR CON MÁS PARTIDAS".center(120))
+            print("="*120)
+            report_player_most_games()
+            input("\nPresiona Enter para continuar...")
+            
+        elif opt == 3:
+            print("\n" + "="*120)
+            print("INFORME 3: AVENTURAS POR USUARIO".center(120))
+            print("="*120)
+            report_user_adventures()
+            input("\nPresiona Enter para continuar...")
+            
+        elif opt == 4:
+            flag_menu = False
+
 
 # ============================================
 # 3. MENÚ PRINCIPAL
@@ -383,9 +422,9 @@ def main_menu():
         # Menu no logeado
         if not user_logged_in:
             choice = Auxiliars.getOpt(
-                textOpts="1) Login\n2) Crear nuevo usuario\n3) Rejugar aventura\n4) Ver informes\n5) Salir\n6) Seleccionar aventura\n7) Seleccionar personaje\n8) Jugar aventura",
+                textOpts="1) Login\n2) Crear nuevo usuario\n3) Rejugar aventura\n4) Ver informes\n5) Salir\n",
                 inputOptText="\nElige una opción: ",
-                rangeList=[1, 2, 3, 4, 5, 6, 7, 8]
+                rangeList=[1, 2, 3, 4, 5]
             )
 
             # Login en usuario
@@ -397,6 +436,7 @@ def main_menu():
                 if user_logged_in:
                     select_adventure()
                     select_character()
+                    play_adventure()
 
             # Crear usuario
             elif choice == 2:
@@ -414,33 +454,13 @@ def main_menu():
             elif choice == 5:
                 print("\n¡Gracias por jugar a Choose your Story!")
                 flag_menu = False
-            
-            #DEBUG
-            #ADVENTURE
-            elif choice == 6:
-                select_adventure()
-
-            #CHARACTER
-            elif choice == 7:
-                select_character()
-
-            #PLAY
-            elif choice == 8:
-                if not game_context['idUser']:
-                    print("Primero debes hacer login.")
-                elif not game_context['idAdventure']:
-                    print("Primero selecciona una aventura.")
-                elif not game_context['idChar']:
-                    print("Primero selecciona un personaje.")
-                else:
-                    play_adventure()
 
         # Menu logged
         else:
             choice = Auxiliars.getOpt(
-                textOpts="1) Logout\n2) Jugar\n3) Rejugar aventura\n4) Ver informes\n5) Salir\n6) Seleccionar aventura\n7) Seleccionar personaje",
+                textOpts="1) Logout\n2) Jugar\n3) Rejugar aventura\n4) Ver informes\n5) Salir\n",
                 inputOptText="\nElige una opción: ",
-                rangeList=[1, 2, 3, 4, 5, 6, 7, 8]
+                rangeList=[1, 2, 3, 4, 5]
             )
 
             # Logout del usuario
@@ -449,14 +469,7 @@ def main_menu():
 
             # Jugar
             elif choice == 2:
-                if not game_context['idUser']:
-                    print("Primero debes hacer login.")
-                elif not game_context['idAdventure']:
-                    print("Primero selecciona una aventura.")
-                elif not game_context['idChar']:
-                    print("Primero selecciona un personaje.")
-                else:
-                    play_adventure()
+                play_adventure()
             
             # Replay
             elif choice == 3:
@@ -470,16 +483,7 @@ def main_menu():
             elif choice == 5:
                 print("\n¡Gracias por jugar a Choose your Story!")
                 flag_menu = False
-
-            #DEBUG
-            #ADVENTURE
-            elif choice == 6:
-                select_adventure()
-
-            #CHARACTER
-            elif choice == 7:
-                select_character()
-
+        
 # ============================================
 # 4. INICIO DEL PROGRAMA
 # ============================================
