@@ -66,6 +66,8 @@ def create_user():
     
     while True:
         user = input("Nuevo usuario (6-10 chars alfanuméricos): ")
+        if user==0:
+            break
         
         if not Auxiliars.checkUser(user):
             continue
@@ -105,7 +107,7 @@ def select_adventure():
     for i in adventures:
         print(Auxiliars.getFormatedBodyColumns((str(i)+")",adventures[i]["name"],adventures[i]["description"]),(25,40,40),0))
     
-    aventura = Auxiliars.getOpt("0) Para salir","Elige un personaje: ",[],adventures,[0])
+    aventura = Auxiliars.getOpt("0) Para salir","Elige una aventura: ",[],adventures,[0])
     
     if aventura != 0:
         game_context["idAdventure"] = aventura
@@ -138,225 +140,104 @@ def select_character():
 
 # REVISAR
 def play_adventure():
-    """Función para jugar una aventura seleccionada"""
-    
-    # Verificar que tenemos todo lo necesario
-    if not game_context['idUser']:
-        print("Error: No hay usuario logueado.")
-        return
+    # checa que el context esté completo
     if not game_context['idAdventure']:
         print("Error: No hay aventura seleccionada.")
         return
     if not game_context['idChar']:
         print("Error: No hay personaje seleccionado.")
         return
+
+    # nuevo id de juego y lo mete en el context
+    game_ids = BBDD.getIdGames()
+    maxid = 0
+    for id in game_ids:
+        if id >= maxid:
+            maxid = id+1
+    game_context['idGame'] = maxid
+    # inserta en la bd el nuevov juego
+    BBDD.insertCurrentGame(
+        maxid,
+        game_context['idUser'],
+        game_context['idChar'],
+        game_context['idAdventure'],
+    )
     
-    print(Auxiliars.getHeader("JUGANDO AVENTURA"))
-    print(f"Aventura: {game_context['adventureName']}")
-    print(f"Personaje: {game_context['characterName']}")
-    
-    # Obtener un nuevo ID para el juego
-    existing_ids = BBDD.getIdGames()
-    if existing_ids:
-        new_id = max(existing_ids) + 1
-    else:
-        new_id = 1
-    
-    game_context['idGame'] = new_id
-    
-    # Insertar el juego en la base de datos
-    try:
-        BBDD.insertCurrentGame(new_id, game_context['idUser'], 
-                              game_context['idChar'], game_context['idAdventure'])
-    except Exception as e:
-        print(f"Error al crear la partida: {e}")
-        return
-    
-    # Obtener datos de la aventura
+    # coge los steps y las opciones
     steps = BBDD.get_id_bystep_adventure(game_context['idAdventure'])
     options = BBDD.get_answers_bystep_adventure(game_context['idAdventure'])
     
-    if not steps:
-        print("Error: No se encontraron pasos para esta aventura.")
-        return
+    # coge la primera step
+    current_step_number = BBDD.get_first_step_adventure(game_context['idAdventure'])
     
-    # Encontrar el primer paso (el que no aparece en ningún Leads_to)
-    first_step = None
-    all_leads_to = []
-    
-    # Recopilar todos los destinos de las opciones
-    for opt_id, opt_info in options.items():
-        leads_to = opt_info['Leads_to']
-        if leads_to:
-            all_leads_to.append(leads_to)
-    
-    # Encontrar el paso que no es destino de ninguna opción
-    for step_id in steps:
-        if step_id not in all_leads_to:
-            first_step = step_id
-            break
-    
-    if not first_step:
-        print("Error: No se pudo encontrar el primer paso de la aventura.")
-        return
-    
-    current_step = first_step
-    game_finished = False
-    
-    while not game_finished and current_step in steps:
-        # Obtener información del paso actual
-        step_info = steps[current_step]
-        description = step_info['Description']
-        is_final = step_info['Is_final_step']
+    print(Auxiliars.getHeader("Starting adventure... | {}".format(game_context['adventureName'])))
+    print("Personaje: {}".format(game_context['characterName']))
+
+    # el juego en sí
+    flag_exit=False
+    step_data = steps[current_step_number]
+    while not flag_exit:
+
         
-        # Reemplazar %personaje% por el nombre del personaje
-        description = description.replace('%personaje%', game_context['characterName'])
+        # Mostrar descripción del step
+        print("\n" + "".center(105,"=")) # cambia a center
+        print(Auxiliars.formatText(step_data['Description'], 100))
+        print("".center(105,"="))
+
         
-        # Mostrar el paso
-        print("\n" + "="*105)
-        print(f"PASO: {current_step}")
-        print("="*105)
-        print(Auxiliars.formatText(description, 105))
-        print("="*105)
+        step_adventure_options = {}
+        for opt_id in options.keys():
+            opt_data= options[opt_id]
+            if opt_data["Id_step_adventure"] == current_step_number:
+                step_adventure_options[opt_id] = opt_data
         
-        # Si es paso final, terminar la aventura
-        if is_final:
-            print("\n¡FIN DE LA AVENTURA!")
-            game_finished = True
-            break
-        
-        # Obtener opciones para este paso
-        # Necesitamos una nueva función en BBDD para obtener las opciones de un paso específico
-        # Por ahora, buscaremos manualmente
-        step_options = {}
-        
-        # Buscar todas las opciones que tengan id_step_adventure = current_step
-        # Necesitamos conectar directamente con la base de datos
-        import pymysql
-        
-        conn = pymysql.connect(
-            host='chooseyourstory-database.cbim0ycisox3.eu-north-1.rds.amazonaws.com',
-            user='admin',
-            password='Jefecolorado123!',
-            database='mydb')
-        
-        cursor = conn.cursor()
-        cursor.execute("""
-            SELECT Id_step_option, description, leads_to 
-            FROM Step_options 
-            WHERE id_step_adventure = %s
-        """, (current_step,))
-        
-        rows = cursor.fetchall()
-        
-        for row in rows:
-            option_id = row[0]
-            option_desc = row[1]
-            leads_to = row[2]
-            
-            step_options[option_id] = {
-                'Description': option_desc,
-                'Leads_to': leads_to
-            }
-        
-        cursor.close()
-        conn.close()
-        
-        # Si no hay opciones, es un paso final implícito
-        if not step_options:
+
+        if step_adventure_options=={}:
+            print(current_step_number)
             print("No hay opciones disponibles. Fin de la aventura.")
-            game_finished = True
+            input()
             break
-        
         # Mostrar opciones
-        print("\nOPCIONES DISPONIBLES:")
-        formatted_answers = ""
-        
-        for opt_id in sorted(step_options.keys()):
-            opt_text = step_options[opt_id]['Description']
-            opt_text = opt_text.replace('%personaje%', game_context['characterName'])
-            
-            # Formatear la respuesta
-            formatted_answer = Auxiliars.getFormatedAnswers(
-                opt_id, opt_text, 100, 105
-            )
-            formatted_answers += formatted_answer + "\n"
-        
-        print(formatted_answers)
-        
-        # Pedir al usuario que elija una opción
-        valid_options = list(step_options.keys())
-        
-        while True:
-            try:
-                choice_input = input(f"Elige una opción ({', '.join(map(str, valid_options))}): ").strip()
-                
-                if choice_input.isdigit():
-                    choice_int = int(choice_input)
-                    if choice_int in valid_options:
-                        selected_option = choice_int
-                        break
-                    else:
-                        print(f"Opción no válida. Por favor, elige entre: {valid_options}")
-                else:
-                    print("Entrada no válida. Introduce un número.")
-            except ValueError:
-                print("Entrada no válida. Introduce un número.")
-        
-        # Registrar la elección en la base de datos
-        # Primero necesitamos crear la función insertCurrentChoice en BBDD
-        # Por ahora, hacemos la inserción directamente
-        try:
-            conn = pymysql.connect(
-                host='chooseyourstory-database.cbim0ycisox3.eu-north-1.rds.amazonaws.com',
-                user='admin',
-                password='Jefecolorado123!',
-                database='mydb')
-            
-            cursor = conn.cursor()
-            cursor.execute("""
-                INSERT INTO Game_has_choices (id_game, id_step_adventure, id_step_option)
-                VALUES (%s, %s, %s)
-            """, (new_id, current_step, selected_option))
-            
-            conn.commit()
-            cursor.close()
-            conn.close()
-            
-        except Exception as e:
-            print(f"Error al registrar la elección: {e}")
-        
-        # Mostrar la respuesta seleccionada
-        selected_text = step_options[selected_option]['Description']
-        selected_text = selected_text.replace('%personaje%', game_context['characterName'])
-        print("\n" + ">"*50)
-        print("Has elegido:")
-        print(Auxiliars.formatText(selected_text, 105))
-        print(">"*50)
-        
-        # Avanzar al siguiente paso
-        next_step = step_options[selected_option]['Leads_to']
-        
-        if next_step and next_step in steps:
-            print(f"\nAvanzando al paso {next_step}...")
-            current_step = next_step
-        else:
-            print("\nNo hay siguiente paso definido. Fin de la aventura.")
-            game_finished = True
-    
-    # Mostrar estadísticas o mensaje final
-    print("\n" + "*"*105)
-    print("¡Partida completada!")
-    print(f"ID de partida: {new_id}")
-    print("Puedes revisar esta partida más tarde desde la opción 'Rejugar aventura'")
-    print("*"*105)
-    
-    input("\nPresiona Enter para volver al menú principal...")
+        formattedAnswersList=[]
+        formattedAnswers=""
+        print("\nOpciones disponibles:")
+        for opt_id in step_adventure_options.keys():
+            opt_data=step_adventure_options[opt_id]
+            formattedAnswersList.append(opt_id)
+            formattedAnswers += "\n"+Auxiliars.getFormatedAnswers(opt_id,opt_data['Description'],80,5)
+
+        choice=Auxiliars.getOpt(formattedAnswers,"\nElige una opción (número): ",formattedAnswersList)
+
+        #elige opcion
+        flag_exit_option=False
+        while not flag_exit_option and step_adventure_options!={}:
+            if not str(choice).isnumeric():
+                choice = input("\nIntroduce una opción válida: ")
+                continue
+            choice=int(choice)
+            if choice not in step_adventure_options.keys():
+                input("\nIntroduce una opción válida: ")
+                continue
+            else:
+                BBDD.insertCurrentChoice(maxid, current_step_number, choice)
+
+                current_step_number = step_adventure_options[choice]['Leads_to']
+                flag_exit_option=True
+        step_data = steps[current_step_number]
+        # verif si es final_Step
+        if step_data['Is_final_step']==1:
+            print("\n" + "".center(105,"*") )
+            print("FIN DE LA AVENTURA: ".center(105)+"\n"+Auxiliars.formatText(step_data['Description'], 100))
+            print("*" * 105)
+            input()
+            flag_exit = True
+
+
+    # fin juego
 
 
 #TODO
 def replay_adventure():
-    """Rejugar una aventura ya jugada"""
     replay_data = BBDD.getReplayAdventures()
     
     if not replay_data:
