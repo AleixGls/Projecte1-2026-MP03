@@ -274,13 +274,20 @@ def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[])
         opt = input(inputOptText)
 
 
-        opt_int = int(opt)
-        if opt_int in rangeList or opt_int in dictionary or opt_int in exceptions:
-            return opt_int
-        elif opt in rangeList or opt in dictionary or opt in exceptions:
+        if opt in rangeList or opt in dictionary or opt in exceptions:
             return opt
+        elif  opt.isnumeric():
+            opt_int = int(opt)
+            if opt_int in rangeList or opt_int in dictionary or opt_int in exceptions:
+                return opt_int
+            else:
+                print("\nOpcio no valida.")
         else:
             print("\nOpcio no valida.")
+
+
+
+
 
 
 # HACER #Para esto se necesitan los informes

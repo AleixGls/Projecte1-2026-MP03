@@ -182,7 +182,8 @@ def insertCurrentGame(idGame, idUser, idChar, idAdventure):
     # Aquesta funció insereix un nou registre de “game” a la BBDD
     conn = connectToDB()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO Games (id_game, id_user, id_character,id_adventure, date) VALUES (%s,%s,%s,%s,%s)",(idGame,idUser,idChar,idAdventure,datetime.datetime.now()))
+    fecha=datetime.datetime.now()
+    cursor.execute("INSERT INTO Games (id_game, id_user, id_character,id_adventure, date) VALUES (%s,%s,%s,%s,%s)",(idGame,idUser,idChar,idAdventure,fecha))
     saveAndCloseDB(conn, cursor)
     return
 
