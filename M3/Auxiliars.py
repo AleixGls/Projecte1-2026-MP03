@@ -202,7 +202,6 @@ def getFormatedAnswers(idAnswer, text, lenLine, leftMargin):
 def getHeadeForTableFromTuples(t_name_columns, t_size_columns, title="", margin=0):
     # Aquesta funció, rep una tupla amb els noms de les capçaleres de les columnes (t_name_columns) i una tupla amb
     # les seves grandàries t_size_columns i ens retorna una capçalera formatada segons els paràmetres passats.
-    # Ahora también acepta un margen entre columnas para alinear con getFormatedBodyColumns
     cabecera = ""
     cabecera_ancho = sum(t_size_columns) + (len(t_size_columns) - 1) * margin
     for i in range(0, len(t_name_columns)):
@@ -210,8 +209,10 @@ def getHeadeForTableFromTuples(t_name_columns, t_size_columns, title="", margin=
         t_size = t_size_columns[i]
         cabecera += (str(t_name).ljust(t_size))
         if i < len(t_name_columns) - 1:
-            cabecera += (" " * margin)  # Añadir margen entre columnas
+            cabecera += (" " * margin)
     return (title.center(cabecera_ancho, "=") + "\n" + cabecera + "\n" + "".center(cabecera_ancho, "*"))
+
+
 # COMPLETADA
 def getTableFromDict(tuple_of_keys, weigth_of_columns, dict_of_data):
     # A aquesta funció li passem com a paràmetres, un diccionari del tipus {id: {diccionari amb dades}}
@@ -293,6 +294,7 @@ def getOpt(textOpts="",inputOptText="",rangeList=[],dictionary={},exceptions=[])
                 print("\nOpcio no valida.")
 
 
+# HACER #Para esto se necesitan los informes
 def getFormatedTable(queryTable, title=""):
     """
     Formatea una tabla del tipo que retorna get_table para mostrarla por pantalla.
@@ -307,21 +309,24 @@ def getFormatedTable(queryTable, title=""):
     data_rows = queryTable[1:]
     
     num_columns = len(columns)
-    margin = 1  # Margen fijo entre columnas
-    
-    # Calcular el ancho disponible para las columnas (descontando los márgenes)
-    available_width = 120 - (num_columns - 1) * margin
+    margin = 1
     
     # Si tenemos 4 columnas (como en el informe 1), usamos anchos específicos
     if num_columns == 4:
         # Para el informe de respuesta más usada
-        formats = [24, 33, 33, 20]  # Total: 110, con márgenes 113
+        formats = [26, 35, 35, 21]
     else:
-        # Calcular ancho de cada columna (disponible / número de columnas)
-        column_width = available_width // num_columns
-        if column_width < 10:  # Mínimo 10 caracteres por columna
-            column_width = 10
-        formats = [column_width] * num_columns
+        # Calcular el ancho total disponible (120 menos los márgenes entre columnas)
+        total_width = 120 - ((num_columns - 1) * margin)
+        
+        # Distribuir el ancho equitativamente entre las columnas
+        base_width = total_width // num_columns
+        extra = total_width % num_columns
+        
+        # Asignar ancho base a todas las columnas y distribuir el extra
+        formats = [base_width] * num_columns
+        for i in range(extra):
+            formats[i] += 1
     
     # Crear cabecera con márgenes
     header = getHeadeForTableFromTuples(columns, formats, title, margin)
@@ -332,12 +337,7 @@ def getFormatedTable(queryTable, title=""):
         # Convertir todos los elementos a string
         row_strings = []
         for cell in row:
-            # Si el texto es muy largo, lo dividimos en líneas más cortas
-            if isinstance(cell, str) and len(cell) > formats[0]:
-                # Para celdas largas, usamos formatText para dividir en líneas
-                row_strings.append(cell)
-            else:
-                row_strings.append(str(cell))
+            row_strings.append(str(cell))
         
         # Formatear la fila en columnas
         formatted_row = getFormatedBodyColumns(
